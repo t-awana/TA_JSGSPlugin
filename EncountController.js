@@ -3,7 +3,7 @@
 //=============================================================================
 
  /*:
- * @plugindesc エンカウント率調整
+ * @plugindesc ver1.0 エンカウント率調整
  * @author 沫那環(Tamaki Awana)
  * @help  設定した変数に代入された値に応じて、自動でエンカウント率を調整します。
  * 標準の計算式は、ツクール標準のものよりエンカウントの頻度が抑えられた、
@@ -47,22 +47,22 @@
  */
 
 (function() {
-var parameters = PluginManager.parameters('EncountController');
-    var EncountVariable = Number(parameters['EncountVariable'] || 0);
-    var EncountRate = Number(parameters['EncountRate'] || 5);
+   var parameters = PluginManager.parameters('EncountController');
+   var EncountVariable = Number(parameters['EncountVariable'] || 0);
+   var EncountRate = Number(parameters['EncountRate'] || 5);
 
-    
-
-Game_Player.prototype.makeEncounterCount = function() {
-var n = $gameMap.encounterStep();
-var enr = EncountRate
- if (EncountVariable != 0){
- if ($gameVariables.value(EncountVariable) === 0) {
-  this._encounterCount = Math.randomInt(enr) + n;
- } else if($gameVariables.value(EncountVariable) === 1){
-    this._encounterCount = (Math.randomInt(enr) * 2) + n;
- } else if($gameVariables.value(EncountVariable) === 2){
-    this._encounterCount = Math.randomInt(enr) + Math.randomInt(enr) + 1;
+   Game_Player.prototype.makeEncounterCount = function() {
+      var n = $gameMap.encounterStep();
+      var enr = EncountRate
+      if (EncountVariable != 0){
+         if ($gameVariables.value(EncountVariable) === 0) {
+            this._encounterCount = Math.randomInt(enr) + n;
+         } else if($gameVariables.value(EncountVariable) === 1){
+            this._encounterCount = (Math.randomInt(enr) * 2) + n;
+         } else if($gameVariables.value(EncountVariable) === 2){
+            this._encounterCount = Math.randomInt(enr) + Math.randomInt(enr) + 1;
+         };
+      };
    };
- };
+   
 })();
