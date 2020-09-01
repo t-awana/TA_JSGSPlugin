@@ -23,6 +23,9 @@
  * 【プラグインコマンドについて】
  * このプラグインには、プラグインコマンドはありません。
  * 
+ * 【更新履歴】
+ * ver.1.0 公開
+ * 
  * ---
  * このプラグインは MIT License にもとづいて提供されます。
  * https://opensource.org/licenses/mit-license.php
@@ -54,12 +57,12 @@ Game_Player.prototype.makeEncounterCount = function() {
 var n = $gameMap.encounterStep();
 var enr = EncountRate
  if (EncountVariable != 0){
- if ($gameVariables.value(EncountVariable) === 0)
+ if ($gameVariables.value(EncountVariable) === 0) {
   this._encounterCount = Math.randomInt(enr) + n;
  } else if($gameVariables.value(EncountVariable) === 1){
     this._encounterCount = (Math.randomInt(enr) * 2) + n;
  } else if($gameVariables.value(EncountVariable) === 2){
-    this._encounterCount = Math.randomInt(enr) + Math.randomInt(enm) + 1;
+    this._encounterCount = Math.randomInt(enr) + Math.randomInt(enr) + 1;
    };
-
+ };
 })();
