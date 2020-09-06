@@ -2,7 +2,7 @@
 // EncountControllerMZ.js
 //=============================================================================
 
- /*:
+ /*:ja
  * @target MZ
  * @plugindesc エンカウント率調整
  * @author 沫那環(Tamaki Awana)
