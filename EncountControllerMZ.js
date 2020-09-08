@@ -25,6 +25,7 @@
  * このプラグインには、プラグインコマンドはありません。
  * 
  * 【更新履歴】
+ * ver.1.0.1 パラメータの設定を最適化
  * ver.1.0 公開
  * 
  * ---
@@ -40,10 +41,13 @@
  * 
  * @param EncountVariable
  * @desc エンカウント率の調整を判定する変数を設定します。
+ * @type variable
  * @default 0
  * 
  * @param EncountRate
  * @desc エンカウント率を調整する乱数の最大値
+ * @type number
+ * @min 0
  * @default 5
  */
 
