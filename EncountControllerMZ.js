@@ -25,6 +25,8 @@
  * このプラグインには、プラグインコマンドはありません。
  * 
  * 【更新履歴】
+ * ver.1.1 エンカウント設定がされたマップに移動すると、
+ *         すぐに戦闘開始してしまうバグを修正
  * ver.1.0.1 パラメータの設定を最適化
  * ver.1.0 公開
  * 
@@ -37,7 +39,6 @@
  * 「ストレスフリーなランダムエンカウントを目指す」を参考にしました。
  * http://ktnhmv.jugem.jp/?eid=8
  * この場を借りて、御礼を申し上げます。
- * 
  * 
  * @param EncountVariable
  * @desc エンカウント率の調整を判定する変数を設定します。
@@ -59,14 +60,13 @@
 
    Game_Player.prototype.makeEncounterCount = function() {
       const n = $gameMap.encounterStep();
-      const enr = EncountRate
       if (EncountVariable != 0){
          if ($gameVariables.value(EncountVariable) === 0) {
-            this._encounterCount = Math.randomInt(enr) + n;
+            this._encounterCount = Math.randomInt(EncountRate) + n;
          } else if ($gameVariables.value(EncountVariable) === 1) {
-            this._encounterCount = (Math.randomInt(enr) * 2) + n;
+            this._encounterCount = (Math.randomInt(EncountRate) * 2) + n;
          } else if ($gameVariables.value(EncountVariable) === 2){
-            this._encounterCount = Math.randomInt(enr) + Math.randomInt(enr) + 1;
+            this._encounterCount = Math.randomInt(EncountRate) + Math.randomInt(EncountRate) + 1;
          }
       };
    };
