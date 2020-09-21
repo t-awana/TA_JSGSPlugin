@@ -1,9 +1,8 @@
 //=============================================================================
 // EncountController.js
 //=============================================================================
-
  /*:ja
- * @plugindesc エンカウント率調整
+ * @plugindesc エンカウント率を調整します。
  * @author 沫那環(Tamaki Awana)
  * @help  設定した変数に代入された値に応じて、自動でエンカウント率を調整します。
  * 標準の計算式は、ツクール標準のものよりエンカウントの頻度が抑えられた、
@@ -24,6 +23,7 @@
  * このプラグインには、プラグインコマンドはありません。
  * 
  * 【更新履歴】
+ * ver.1.0.2 コードを最適化
  * ver.1.0.1 パラメータの設定を最適化
  * ver.1.0 公開
  * 
@@ -57,14 +57,13 @@
 
    Game_Player.prototype.makeEncounterCount = function() {
       var n = $gameMap.encounterStep();
-      var enr = EncountRate
       if (EncountVariable != 0){
          if ($gameVariables.value(EncountVariable) === 0) {
-            this._encounterCount = Math.randomInt(enr) + n;
+            this._encounterCount = Math.randomInt(EncountRate) + n;
          } else if($gameVariables.value(EncountVariable) === 1){
-            this._encounterCount = (Math.randomInt(enr) * 2) + n;
+            this._encounterCount = (Math.randomInt(EncountRate) * 2) + n;
          } else if($gameVariables.value(EncountVariable) === 2){
-            this._encounterCount = Math.randomInt(enr) + Math.randomInt(enr) + 1;
+            this._encounterCount = Math.randomInt(EncountRate) + Math.randomInt(EncountRate) + 1;
          };
       };
    };
