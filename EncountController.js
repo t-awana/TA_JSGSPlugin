@@ -23,6 +23,7 @@
  * このプラグインには、プラグインコマンドはありません。
  * 
  * 【更新履歴】
+ * ver.1.1 EncountVariableが設定されていないと勝手にエンカウントするバグを修正
  * ver.1.0.2 コードを最適化
  * ver.1.0.1 パラメータの設定を最適化
  * ver.1.0 公開
@@ -54,17 +55,17 @@
    var parameters = PluginManager.parameters('EncountController');
    var EncountVariable = Number(parameters['EncountVariable'] || 0);
    var EncountRate = Number(parameters['EncountRate'] || 5);
-
-   Game_Player.prototype.makeEncounterCount = function() {
-      var n = $gameMap.encounterStep();
-      if (EncountVariable != 0){
-         if ($gameVariables.value(EncountVariable) === 0) {
-            this._encounterCount = Math.randomInt(EncountRate) + n;
-         } else if($gameVariables.value(EncountVariable) === 1){
-            this._encounterCount = (Math.randomInt(EncountRate) * 2) + n;
-         } else if($gameVariables.value(EncountVariable) === 2){
-            this._encounterCount = Math.randomInt(EncountRate) + Math.randomInt(EncountRate) + 1;
-         };
+   
+   if (EncountVariable) {
+      Game_Player.prototype.makeEncounterCount = function() {
+         var n = $gameMap.encounterStep();
+            if ($gameVariables.value(EncountVariable) === 0) {
+               this._encounterCount = Math.randomInt(EncountRate) + n;
+            } else if ($gameVariables.value(EncountVariable) === 1) {
+               this._encounterCount = (Math.randomInt(EncountRate) * 2) + n;
+            } else if ($gameVariables.value(EncountVariable) === 2) {
+               this._encounterCount = Math.randomInt(EncountRate) + Math.randomInt(EncountRate) + 1;
+            }
       };
    };
    
