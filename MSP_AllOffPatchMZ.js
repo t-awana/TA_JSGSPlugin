@@ -35,7 +35,6 @@
             //識別子の個数もExSLenに突っ込む
             let ExSLen = ExSList.length
             //識別子の個数もExSLenに突っ込む
-            let i = 0;
             while (ExSLen > 0){
             //ExSoundに収めている配列に対応する識別子を、頭から削って、
             //配列の個数を取得するを繰り返すという頭の悪い処理なんで、誰か上手に書き直して欲しい……
