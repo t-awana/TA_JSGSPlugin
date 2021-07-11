@@ -3,24 +3,88 @@
 //=============================================================================
 /*:
  * @target MZ
- * @plugindesc 透けるメニュー背景を実装します。
- * @author 沫那環（Tamaki Awana）
+ * @plugindesc Implement a transparent menu background
+ * @author Tamaki Awana
  * @help
- * メニュー画面に、一枚絵を利用した、透け感のある背景を
- * 重ねて描写する機能を実装します。
+ * Implement a function to depict a transparent background
+ * overlaid on the menu screen.
+ * In addition, adding a function that allows you to set
+ * whether to blur the background displayed under the translucent picture, and
+ * setting to darken the background of the menu screen and game end screen.
+ * 
+ * How to use:
+ * Put image file want to using for background in img/picture,
+ * and select picture on plugin parameter "Background Image".
+ * The size of the image should be the same as the size of the game screen.
+ * Even if you don't set a background image,
+ * you can still set the blur and darken background functions.
+ *
+ * Plugin Commands:
+ * This plugin does not provide plugin commands.
+ *
+ * Update History:
+ * ver.1.0.1 English and RMMZ 1.3.2 supported.
+ * ver.1.0 Release
+ *
+ * ---
+ * This plugin is released under MIT license.
+ * https://opensource.org/licenses/mit-license.php
+ *
+ *
+ * @param Background Image
+ * @desc Background image that use in menu scene
+ * @type file
+ * @require 1
+ * @dir img/pictures
+ * @default MenuBack
+ *
+ * @param Background Opacity
+ * @desc Opacity of background image
+ * @type number
+ * @min 0
+ * @default 224
+ *
+ * @param Background Blur
+ * @desc Whether to blur the lower part of the background
+ * @on Blur
+ * @off Don't blur
+ * @default true
+ * @type boolean
+ *
+ * @param Dark Background On Menu
+ * @desc Whether to more darken the background of the menu screen
+ * @on More darken
+ * @off Don't more darken
+ * @default true
+ * @type boolean
+ * 
+ * @param Dark Background on GameEnd
+ * @desc Whether to darken the background of the game end screen
+ * @on Darken
+ * @off Don't darken
+ * @default true
+ * @type boolean
+ */
+/*:ja
+ * @target MZ
+ * @plugindesc 透けるメニュー背景を実装します。
+ * @author 沫那環
+ * @help
+ * メニュー画面に、透ける背景を重ねて描写する機能を実装します。
  * 加えて、一枚絵の下に表示される背景のぼかしの有無や、
- * メニュー画面やゲーム終了画面で背景を暗くするかどうかの設定もできるようにしました。
+ * メニュー画面やゲーム終了画面の背景を暗くするかどうかの設定もできるようにしました。
  * 
  * 【使い方】
- * img/pictureフォルダに、背景として使用したい画像を入れた上で、
- * プラグインパラメータのBackground Imageから選択してください。
+ * img/pictureフォルダに、背景として使用したい画像を入れて、
+ * プラグインパラメータのBackground Imageから背景画像を選択してください。
  * 画像はゲームの画面サイズと同じ大きさにしてください。
- * ぼかしの有無と、背景を暗くする機能の切り替えは、背景画像を導入しなくても設定可能です。
+ * ぼかしの有無と、背景を暗くする機能の切り替えは、背景画像を設定しなくても設定可能です。
  *
  * 【プラグインコマンドについて】
  * このプラグインには、プラグインコマンドはありません。
  *
  * 【更新履歴】
+ * ver.1.0.1 英語表示と、MZの1.3.2へ対応
  * ver.1.0 公開
  *
  * ---
@@ -49,7 +113,7 @@
  * @type boolean
  *
  * @param Dark Background On Menu
- * @desc メニュー画面の背景をさらに暗くするか
+ * @desc メニュー画面の背景を暗くするか
  * @on 暗くする
  * @off 暗くしない
  * @default true
@@ -63,7 +127,8 @@
  * @type boolean
  */
 (function () {
-  const parameters = PluginManager.parameters("TranslucentMenuBackMZ");
+  const pluginName = decodeURIComponent(document.currentScript.src).match(/([^\/]+)\.js$/)[1];
+  const parameters = PluginManager.parameters(pluginName);
   const BgImg = String(parameters["Background Image"] || "");
   const BgOpacity = Number(parameters["Background Opacity"] || 224);
   const BgBlur = String(parameters["Background Blur"] || "true");
