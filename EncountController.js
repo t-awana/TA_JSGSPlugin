@@ -1,9 +1,66 @@
 //=============================================================================
 // EncountController.js
 //=============================================================================
+ /*:
+ * @plugindesc Tuning encount rate
+ * @author Tamaki Awana
+ * @help Depending on the value assigned to the set variable,
+ * and adjust the encounter rate automatically.
+ * The standard formula has a lower encounter frequency
+ * than the RPG Maker default,
+ * -- 0 to Maximum value of random number
+ *     + Appearance number of steps of the enemy on the map.
+ * 
+ * 
+ * How to use:
+ * Input these values into variable setted at EncountVariable,
+ * change a formula for encount rate soon.
+ * 0：default
+ *   (0 to Maximum value of random number
+ *     + Appearance number of steps of the enemy on the map)
+ * 1：Few
+ *   ((0 to Maximum value of random number)*2
+ *      + Appearance number of steps of the enemy on the map)
+ * 2：Many(RPG Maker default）
+ * If you want to fine-tune the calculation formula or 
+ * increase the setting items, modify the source code of this plugin.
+ * 
+ * Plugin Commands:
+ * This plugin does not provide plugin commands.
+ * 
+ * Update History:
+ * ver.1.1.1 English Supported
+ * ver.1.1 Bug fix : Encounter endlessly if no EncountVariable is set
+ * ver.1.0.2 Code optimize
+ * ver.1.0.1 Paramater Settings optimize
+ * ver.1.0 Release
+ * 
+ * ---
+ * 
+ * This plugin is released under MIT license.
+ * https://opensource.org/licenses/mit-license.php
+ * 
+ * This plugin is based on a "RPGツクールMVで感動ものを作る。" 
+ * that kotonoha*'s blog article 
+ * "ストレスフリーなランダムエンカウントを目指す"
+ * (http://ktnhmv.jugem.jp/?eid=8).
+ * Thanks to kotonoha*.
+ * 
+ * 
+ * @param EncountVariable
+ * @desc Setting variable for encount rate judging.
+ * @type variable
+ * @default 0
+ * 
+ * @param EncountRate
+ * @desc Maximum value of random number for tuning encount rate.
+ * @type number
+ * @min 0
+ * @default 5
+ */
  /*:ja
  * @plugindesc エンカウント率を調整します。
- * @author 沫那環(Tamaki Awana)
+ * @author 沫那環
  * @help  設定した変数に代入された値に応じて、自動でエンカウント率を調整します。
  * 標準の計算式は、ツクール標準のものよりエンカウントの頻度が抑えられた、
  * 0～乱数の最大値 + マップに設定された敵出現歩数
@@ -23,6 +80,7 @@
  * このプラグインには、プラグインコマンドはありません。
  * 
  * 【更新履歴】
+ * ver.1.1.1 英語に対応
  * ver.1.1 EncountVariableが設定されていないと勝手にエンカウントするバグを修正
  * ver.1.0.2 コードを最適化
  * ver.1.0.1 パラメータの設定を最適化
@@ -33,7 +91,7 @@
  * https://opensource.org/licenses/mit-license.php
  * 
  * このプラグインを制作するにあたり、kotonoha*さんのブログ
- * 「RPＧツクールMVで感動ものを作る。」の記事
+ * 「RPGツクールMVで感動ものを作る。」の記事
  * 「ストレスフリーなランダムエンカウントを目指す」を参考にしました。
  * http://ktnhmv.jugem.jp/?eid=8
  * この場を借りて、御礼を申し上げます。
@@ -52,7 +110,8 @@
  */
 
 (function() {
-   var parameters = PluginManager.parameters('EncountController');
+   var pluginName = decodeURIComponent(document.currentScript.src).match(/([^\/]+)\.js$/)[1];
+   var parameters = PluginManager.parameters(pluginName);
    var EncountVariable = Number(parameters['EncountVariable'] || 0);
    var EncountRate = Number(parameters['EncountRate'] || 5);
    
