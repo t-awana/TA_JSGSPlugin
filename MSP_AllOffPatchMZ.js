@@ -1,11 +1,42 @@
 //=============================================================================
 // MSP_AllOffPatchMZ.js
 //=============================================================================
-
+/*:
+ * @target MZ
+ * @plugindesc Reset all sounds setted by MultiSoundPlayer at shutting down of the game
+ * @author Tamaki Awana
+ *
+ * @base MultiSoundPlayer
+ *
+ * @help This plugin is a adding to reset all sounds at fade out
+ * when moving to the title screen or loading save data
+ * setted by RPG Maker MZ plugin "MultiSoundPlayer"
+ * (original RMMV version was made by n2naokun(柊菜緒)
+ *  and ported for RMMZ by Rikudou).
+ * You can use it just by installing this plugin
+ * directly under "MultiSoundPlayer".
+ * *This plugin alone cannot be used!
+ *
+ *
+ * Plugin Commands:
+ * This plugin does not provide plugin commands.
+ *
+ * Update History:
+ * ver.1.0.2 English supported.
+ * ver.1.0.1 Code optimized(Thanks to Plasma Dark)
+ *           There is no change in functionality.
+ * ver.1.0 Released
+ *
+ * ---
+ *
+ * This plugin is released under MIT license.
+ * https://opensource.org/licenses/mit-license.php
+ *
+ */
 /*:ja
  * @target MZ
  * @plugindesc MultiSoundPlayerで設定したサウンドを終了時などに一括で解除します。
- * @author 沫那環(Tamaki Awana)
+ * @author 沫那環
  *
  * @base MultiSoundPlayer
  *
@@ -21,6 +52,7 @@
  * このプラグインに、プラグインコマンドはありません。
  *
  * 【更新履歴】
+ * ver.1.0.2 英語表示に対応
  * ver.1.0.1 コードの記述を改良（Plasma Darkさん、ありがとうございます）
  *           機能自体に変化はありません。
  * ver.1.0 公開
@@ -60,4 +92,3 @@
     }
   }
 })();
-
