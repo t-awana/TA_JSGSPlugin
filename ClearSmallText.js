@@ -1,11 +1,33 @@
 //=============================================================================
 // ClearSmallText.js
 //=============================================================================
-
+/*:
+ * @target MZ
+ * @plugindesc Cleans the display of characters 21px or less
+ * @author Tamaki Awana
+ *
+ * @help Fixed a bug display of characters 21px or less blurred.
+ * 
+ * This bug was fixed on RMMV community version core script 1.3,
+ * but same bug occurred in RMMZ.
+ * So, I ported the corresponding countermeasure code.
+ * Thanks to RMMV community version core script committers.
+ * 
+ * Plugin Commands:
+ * This plugin does not provide plugin commands.
+ * 
+ * Update History:
+ * ver.1.0.1 English supported
+ * ver.1.0 Release
+ * 
+ * ---
+ * This plugin is released under MIT license.
+ * https://opensource.org/licenses/mit-license.php
+ */
 /*:ja
  * @target MZ
  * @plugindesc 21px以下の文字の表示をきれいにします
- * @author 沫那環（Tamaki Awana）
+ * @author 沫那環
  *
  * @help 21px以下の文字の表示が、にじんでしまう不具合を解消します。
  * 
@@ -15,11 +37,14 @@
  * この場を借りて、コミュニティ版コアスクリプトの記述に携わった方々に、
  * お礼申し上げます。
  * 
+ * 【プラグインコマンドについて】
+ * このプラグインには、プラグインコマンドはありません。
+ * 
  * 【更新履歴】
+ * 　ver.1.0.1 英語表示に対応
  * 　ver.1.0　公開
  * 
  * ---
- * 
  * このプラグインは MIT License にもとづいて提供されています。
  * https://opensource.org/licenses/mit-license.php
  */
