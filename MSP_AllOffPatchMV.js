@@ -1,17 +1,40 @@
 //=============================================================================
 // MSP_AllOffPatchMV.js
 //=============================================================================
-
+/*:
+ * @plugindesc Reset all sounds setted by MultiSoundPlayer at shutting down of the game
+ * @author Tamaki Awana
+ * @help This plugin is a adding to reset all sounds at fade out
+ * when moving to the title screen or loading save data
+ * setted by RPG Maker MV plugin "MultiSoundPlayer"
+ * (made by n2naokun(柊菜緒)).
+ * You can use it just by installing this plugin
+ * directly under "MultiSoundPlayer".
+ * *This plugin alone cannot be used!
+ *
+ *
+ * Plugin Commands:
+ * This plugin does not provide plugin commands.
+ * 
+ * Update History:
+ * ver.1.0.1 English supported
+ * ver.1.0 Release
+ *
+ * ---
+ * 
+ * This plugin is released under MIT license.
+ * https://opensource.org/licenses/mit-license.php
+ *
+ */
 /*:ja
  * @plugindesc MultiSoundPlayerで設定したサウンドを終了時などに一括で解除します。
- * @author 沫那環(Tamaki Awana)
+ * @author 沫那環
  *
  *
  * @help n2naokun(柊菜緒)さん作
  * RPGツクールMVプラグイン素材「MultiSoundPlayer」に、
  * タイトル画面移行時やセーブデータのロード時の暗転に
  * 設定していたサウンドを一括解除する機能を追加します。
- * 早い話、RPGツクールMZプラグイン素材「MSP_AllOffPatchMZ」のMV版です。
  * MultiSoundPlayer直下にこのプラグインを導入するだけで使えます。
  * ※このプラグイン単体では使えません！
  *
@@ -20,6 +43,7 @@
  * このプラグインに、プラグインコマンドはありません。
  *
  * 【更新履歴】
+ * ver.1.0.1 英語に対応
  * ver.1.0 公開
  *
  * ---
