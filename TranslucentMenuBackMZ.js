@@ -15,7 +15,8 @@
  * How to use:
  * Put image file want to using for background in img/picture,
  * and select picture on plugin parameter "Background Image".
- * The size of the image should be the same as the size of the game screen.
+ * If you set an image smaller than the screen size,
+ * it will be displayed side by side in tiles.
  * Even if you don't set a background image,
  * you can still set the blur and darken background functions.
  *
@@ -23,6 +24,10 @@
  * This plugin does not provide plugin commands.
  *
  * Update History:
+ * ver.1.1 Tiling background supported
+ *         Added function changing blend mode of background
+ *         Bug fix: That could not be set to a state where
+ *                  there is no background image
  * ver.1.0.1 English and RMMZ 1.3.2 supported.
  * ver.1.0 Release
  *
@@ -36,7 +41,7 @@
  * @type file
  * @require 1
  * @dir img/pictures
- * @default MenuBack
+ * @default 
  *
  * @param Background Opacity
  * @desc Opacity of background image
@@ -44,6 +49,19 @@
  * @min 0
  * @default 224
  *
+ * @param Background Blend Mode
+ * @desc Blend mode of background image
+ * @type select
+ * @option Normal
+ * @value 0
+ * @option Add
+ * @value 1
+ * @option Multiply
+ * @value 2
+ * @option Screen
+ * @value 3
+ * @default 0
+ * 
  * @param Background Blur
  * @desc Whether to blur the lower part of the background
  * @on Blur
@@ -77,13 +95,16 @@
  * 【使い方】
  * img/pictureフォルダに、背景として使用したい画像を入れて、
  * プラグインパラメータのBackground Imageから背景画像を選択してください。
- * 画像はゲームの画面サイズと同じ大きさにしてください。
+ * 画面サイズより小さいサイズの画像を設定した場合、タイル状に並べて表示します。
  * ぼかしの有無と、背景を暗くする機能の切り替えは、背景画像を設定しなくても設定可能です。
  *
  * 【プラグインコマンドについて】
  * このプラグインには、プラグインコマンドはありません。
  *
  * 【更新履歴】
+ * ver1.1 タイル状の背景表示に対応
+ *        背景画像の合成方法を選べる機能を追加
+ *        背景画像がない状態に設定できなかった不具合を修正
  * ver.1.0.1 英語表示と、MZの1.3.2へ対応
  * ver.1.0 公開
  *
@@ -97,7 +118,7 @@
  * @type file
  * @require 1
  * @dir img/pictures
- * @default MenuBack
+ * @default 
  *
  * @param Background Opacity
  * @desc 背景画像の透明度
@@ -105,6 +126,19 @@
  * @min 0
  * @default 224
  *
+ * @param Background Blend Mode
+ * @desc 背景画像の合成方法
+ * @type select
+ * @option 通常
+ * @value 0
+ * @option 加算
+ * @value 1
+ * @option 乗算
+ * @value 2
+ * @option スクリーン
+ * @value 3
+ * @default 0
+ * 
  * @param Background Blur
  * @desc 背景の下層部分にぼかしをかけるか
  * @on ぼかす
@@ -126,11 +160,12 @@
  * @default true
  * @type boolean
  */
-(function () {
+(() => {
   const pluginName = decodeURIComponent(document.currentScript.src).match(/([^\/]+)\.js$/)[1];
   const parameters = PluginManager.parameters(pluginName);
   const BgImg = String(parameters["Background Image"] || "");
   const BgOpacity = Number(parameters["Background Opacity"] || 224);
+  const BgBlendMode = Number(parameters["Background Blend Mode"] || 0);
   const BgBlur = String(parameters["Background Blur"] || "true");
   const MenuBgDark = String(parameters["Dark Background On Menu"] || "true");
   const GEBgDark = String(parameters["Dark Background on GameEnd"] || "true");
@@ -147,16 +182,11 @@
       this.setBackgroundOpacity(192);
     }
     if (BgImg) {
-      this._backgroundSprite2 = new Sprite(ImageManager.loadPicture(BgImg));
+      this._backgroundSprite2 = new TilingSprite(ImageManager.loadPicture(BgImg));
+      this._backgroundSprite2.move(0, 0, Graphics.width, Graphics.height);
       this._backgroundSprite2.opacity = BgOpacity;
+      this._backgroundSprite2.blendMode = BgBlendMode;
       this.addChild(this._backgroundSprite2);
-    }
-  };
-
-  Scene_MenuBase.prototype.start = function () {
-    Scene_Base.prototype.start.call(this);
-    if (BgImg) {
-      this.scaleSprite(this._backgroundSprite2);
     }
   };
 
