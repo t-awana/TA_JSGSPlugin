@@ -19,10 +19,13 @@
  * on actor, class, weapon, armor, state.
  * <TPBPenaltyRate:(value of 0 to 100)>
  * Ex.<TPBPenaltyRate:20>: changeing the TPB penalty rate to 20%.
+ * It is possible to set 101% or more, but it is not recommended positively 
+ * because it may upset the game balance.
  *
  * This plugin does not provide plugin commands.
  * 
  * Update History:
+ * ver.1.1.1 Fixed an omission in the English version help
  * ver.1.1 Added the function to change the value of the penalty rate
  * ver.1.0 Release
  * 
@@ -59,6 +62,7 @@
  * プラグインコマンドはありません。
  * 
  * 【更新履歴】
+ * ver.1.1.1 英語版のヘルプに表記漏れがあったところを修正
  * ver.1.1 ペナルティの値を変更できる機能を追加
  * ver.1.0 公開
  * 
