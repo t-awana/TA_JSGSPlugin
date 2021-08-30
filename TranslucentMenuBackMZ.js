@@ -9,7 +9,7 @@
  * Implement a function to depict a transparent background
  * overlaid on the menu screen.
  * In addition, adding a function that allows you to set
- * whether to blur the background displayed under the translucent picture, and
+ * whether to blur the map displayed under the translucent picture, and
  * setting to darken the background of the menu screen and game end screen.
  * 
  * How to use:
@@ -24,6 +24,7 @@
  * This plugin does not provide plugin commands.
  *
  * Update History:
+ * ver.1.1.1 Corrected help typographical errors
  * ver.1.1 Tiling background supported
  *         Added function changing blend mode of background
  *         Bug fix: That could not be set to a state where
@@ -89,7 +90,7 @@
  * @author 沫那環
  * @help
  * メニュー画面に、透ける背景を重ねて描写する機能を実装します。
- * 加えて、一枚絵の下に表示される背景のぼかしの有無や、
+ * 加えて、一枚絵の下に表示されるマップ画面のぼかしの有無や、
  * メニュー画面やゲーム終了画面の背景を暗くするかどうかの設定もできるようにしました。
  * 
  * 【使い方】
@@ -102,6 +103,7 @@
  * このプラグインには、プラグインコマンドはありません。
  *
  * 【更新履歴】
+ * ver.1.1.1 ヘルプの誤植を訂正
  * ver1.1 タイル状の背景表示に対応
  *        背景画像の合成方法を選べる機能を追加
  *        背景画像がない状態に設定できなかった不具合を修正
