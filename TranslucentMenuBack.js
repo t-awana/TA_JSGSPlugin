@@ -23,6 +23,7 @@
  * This plugin does not provide plugin commands.
  *
  * Update History:
+ * ver.1.1.3 Corrected help typographical errors
  * ver.1.1.2 Corrected help typographical errors
  * ver.1.1.1 Corrected help typographical errors
  * ver.1.1 Tiling background supported
@@ -88,7 +89,6 @@
  * 【使い方】
  * img/pictureフォルダに、背景として使用したい画像を入れて、
  * プラグインパラメータのBackground Imageから背景画像を選択してください。
- * 画像はゲームの画面サイズと同じ大きさにしてください。
  * 画面サイズより小さいサイズの画像を設定した場合、タイル状に並べて表示します。
  * ぼかしの有無と、背景を暗くする機能の切り替えは、背景画像を設定しなくても設定可能です。
  *
@@ -96,6 +96,7 @@
  * このプラグインには、プラグインコマンドはありません。
  *
  * 【更新履歴】
+ * ver.1.1.3 ヘルプの誤植を訂正
  * ver.1.1.2 ヘルプの誤植を訂正
  * ver.1.1.1 ヘルプの誤植を訂正
  * ver1.1 タイル状の背景表示に対応
