@@ -24,6 +24,7 @@
  * This plugin does not provide plugin commands.
  *
  * Update History:
+ * ver.1.1.2 Corrected help typographical errors
  * ver.1.1.1 Corrected help typographical errors
  * ver.1.1 Tiling background supported
  *         Added function changing blend mode of background
