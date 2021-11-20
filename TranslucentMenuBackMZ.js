@@ -13,7 +13,7 @@
  * setting to darken the background of the menu screen and game end screen.
  * 
  * How to use:
- * Put image file want to using for background in img/picture,
+ * Put image file want to using for background in img/system,
  * and select picture on plugin parameter "Background Image".
  * If you set an image smaller than the screen size,
  * it will be displayed side by side in tiles.
@@ -24,6 +24,7 @@
  * This plugin does not provide plugin commands.
  *
  * Update History:
+ * ver.1.2 Change the call destination of the background image to the img/system
  * ver.1.1.2 Corrected help typographical errors
  * ver.1.1.1 Corrected help typographical errors
  * ver.1.1 Tiling background supported
@@ -42,7 +43,7 @@
  * @desc Background image that use in menu scene
  * @type file
  * @require 1
- * @dir img/pictures
+ * @dir img/system
  * @default 
  *
  * @param Background Opacity
@@ -104,6 +105,7 @@
  * このプラグインには、プラグインコマンドはありません。
  *
  * 【更新履歴】
+ * ver.1.2 背景画像をimg/systemから呼び出す形に変更
  * ver.1.1.2 ヘルプの誤植を訂正
  * ver.1.1.1 ヘルプの誤植を訂正
  * ver1.1 タイル状の背景表示に対応
@@ -121,7 +123,7 @@
  * @desc メニュー画面の背景に使用する画像
  * @type file
  * @require 1
- * @dir img/pictures
+ * @dir img/system
  * @default 
  *
  * @param Background Opacity
@@ -186,7 +188,7 @@
       this.setBackgroundOpacity(192);
     }
     if (BgImg) {
-      this._backgroundSprite2 = new TilingSprite(ImageManager.loadPicture(BgImg));
+      this._backgroundSprite2 = new TilingSprite(ImageManager.loadSystem(BgImg));
       this._backgroundSprite2.move(0, 0, Graphics.width, Graphics.height);
       this._backgroundSprite2.opacity = BgOpacity;
       this._backgroundSprite2.blendMode = BgBlendMode;
