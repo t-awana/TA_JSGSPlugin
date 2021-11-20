@@ -12,7 +12,7 @@
  * setting to darken the background of game end screen.
  * 
  * How to use:
- * Put image file want to using for background in img/picture,
+ * Put image file want to using for background in img/system,
  * and select picture on plugin parameter "Background Image".
  * If you set an image smaller than the screen size,
  * it will be displayed side by side in tiles.
@@ -23,6 +23,7 @@
  * This plugin does not provide plugin commands.
  *
  * Update History:
+ * ver.1.2 Change the call destination of the background image to the img/system
  * ver.1.1.3 Corrected help typographical errors
  * ver.1.1.2 Corrected help typographical errors
  * ver.1.1.1 Corrected help typographical errors
@@ -42,7 +43,7 @@
  * @desc Background image that use in menu scene
  * @type file
  * @require 1
- * @dir img/pictures
+ * @dir img/system
  * @default 
  *
  * @param Background Opacity
@@ -87,7 +88,7 @@
  * メニュー画面やゲーム終了画面の背景を暗くするかどうかの設定もできるようにしました。
  * 
  * 【使い方】
- * img/pictureフォルダに、背景として使用したい画像を入れて、
+ * img/systemフォルダに、背景として使用したい画像を入れて、
  * プラグインパラメータのBackground Imageから背景画像を選択してください。
  * 画面サイズより小さいサイズの画像を設定した場合、タイル状に並べて表示します。
  * ぼかしの有無と、背景を暗くする機能の切り替えは、背景画像を設定しなくても設定可能です。
@@ -96,6 +97,7 @@
  * このプラグインには、プラグインコマンドはありません。
  *
  * 【更新履歴】
+ * ver.1.2 背景画像をimg/systemから呼び出す形に変更
  * ver.1.1.3 ヘルプの誤植を訂正
  * ver.1.1.2 ヘルプの誤植を訂正
  * ver.1.1.1 ヘルプの誤植を訂正
@@ -114,7 +116,7 @@
  * @desc メニュー画面の背景に使用する画像
  * @type file
  * @require 1
- * @dir img/pictures
+ * @dir img/system
  * @default 
  *
  * @param Background Opacity
@@ -175,7 +177,7 @@
       _Scene_MenuBase_createBackground.call(this);
       this._backgroundSprite2 = new TilingSprite();
       this._backgroundSprite2.move(0, 0, Graphics.width, Graphics.height);
-      this._backgroundSprite2.bitmap = ImageManager.loadPicture(BgImg);
+      this._backgroundSprite2.bitmap = ImageManager.loadSystem(BgImg);
       this._backgroundSprite2.opacity = BgOpacity;
       this._backgroundSprite2.blendMode = BgBlendMode;
       this.addChild(this._backgroundSprite2);
