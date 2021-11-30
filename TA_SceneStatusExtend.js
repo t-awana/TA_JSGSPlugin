@@ -55,6 +55,10 @@
  *  set in the plug-in parameter.
  *
  * Update History:
+ * ver.1.1 Added gradient color settings for gauges up to the next level,
+ *         and setting the transparency of windows of status scene,
+ *         and function of displaying actor's slot names.
+ *         Code optimized.
  * ver.1.0 Released.
  *
  * ---
@@ -110,6 +114,14 @@
  * @desc Height of status window.
  * @default 552
  * @parent Status Window
+ * 
+ * @param WStatusOpacity
+ * @type number
+ * @min 0
+ * @max 255
+ * @desc Opacity of status window.
+ * @default 192
+ * @parent Status Window
  *
  * @param HITandEVASystemTerm
  * @desc Which setting to use when displaying hit rate and evasion terms.
@@ -134,6 +146,16 @@
  * @on Show
  * @off Don't Show
  * @default true
+ * @parent EXP
+ * 
+ * @param ExpNextGaugeColor1
+ * @desc Text color number of left side of gauge gradient to the next level.
+ * @default 30
+ * @parent EXP
+ * 
+ * @param ExpNextGaugeColor2
+ * @desc Text color number of right side of gauge gradient to the next level.
+ * @default 31
  * @parent EXP
  *
  * @param Parameters
@@ -395,6 +417,22 @@
  * @desc Max Number of equipments.
  * @default 6
  * @parent Equipments
+ * 
+ * @param SlotNameVisible
+ * @desc Which setting to display actor's slots name.
+ * @type boolean
+ * @on Show
+ * @off Don't show
+ * @default true
+ * @parent Equipments
+ * 
+ * @param SlotNameWidth
+ * @type number
+ * @min 0
+ * @max 9007
+ * @desc Width of slot name when displaying actor's slot name.
+ * @default 138
+ * @parent SlotNameVisible
  *
  * @param ProfileHeader
  * @desc Header of profile.
@@ -451,6 +489,14 @@
  * @desc Number of columns per row on page select window.
  * If you set "0", display all set items on one line.
  * @default 0
+ * @parent PageSelectWindow
+ * 
+ * @param PageSelectWindowOpacity
+ * @type number
+ * @min 0
+ * @max 255
+ * @desc Opacity of page select window.
+ * @default 192
  * @parent PageSelectWindow
  *
  * @param PageSelectWindowList
@@ -708,6 +754,10 @@
  * 　　立ち絵のサイズは、プラグインパラメータで設定した数値に合わせるようにしてください。
  *
  * 【更新履歴】
+ * 　ver.1.1 次のレベルまでのゲージのグラデーションカラーの設定と、
+ *           各種ウィンドウの透明度の設定、
+ *           およびアクターのスロット名を表示する機能を追加
+ *           コードを最適化。
  * 　ver.1.0 公開
  *
  * ---
@@ -763,6 +813,14 @@
  * @desc ステータスウィンドウの高さ
  * @default 552
  * @parent Status Window
+ * 
+ * @param WStatusOpacity
+ * @type number
+ * @min 0
+ * @max 255
+ * @desc ステータスウィンドウの透明度
+ * @default 192
+ * @parent Status Window
  *
  * @param HITandEVASystemTerm
  * @desc 命中率と回避率の用語表示に、システムの用語欄で設定したものを優先して使うかどうか
@@ -787,6 +845,16 @@
  * @on 表示する
  * @off 表示しない
  * @default true
+ * @parent EXP
+ * 
+ * @param ExpNextGaugeColor1
+ * @desc 次のレベルまでのゲージのグラデーションの左側のテキストカラー番号を設定します。
+ * @default 30
+ * @parent EXP
+ * 
+ * @param ExpNextGaugeColor2
+ * @desc 次のレベルまでのゲージのグラデーションの右側のテキストカラー番号を設定します。
+ * @default 31
  * @parent EXP
  *
  * @param Parameters
@@ -1048,6 +1116,22 @@
  * @desc 表示する装備欄の最大数
  * @default 6
  * @parent Equipments
+ * 
+ * @param SlotNameVisible
+ * @desc アクターのスロット名を表示するかどうか
+ * @type boolean
+ * @on 表示する
+ * @off 表示しない
+ * @default true
+ * @parent Equipments
+ * 
+ * @param SlotNameWidth
+ * @type number
+ * @min 0
+ * @max 9007
+ * @desc アクターのスロット名を表示するときのスロット名の幅
+ * @default 138
+ * @parent SlotNameVisible
  *
  * @param ProfileHeader
  * @desc プロフィール欄の見出し
@@ -1104,6 +1188,14 @@
  * @desc ページ選択ウィンドウの一行あたりに表示する項目数
  * 0を指定すると、設定した項目全てを一行に表示する
  * @default 0
+ * @parent PageSelectWindow
+ * 
+ * @param PageSelectWindowOpacity
+ * @type number
+ * @min 0
+ * @max 255
+ * @desc ページ選択ウィンドウの透明度
+ * @default 192
  * @parent PageSelectWindow
  *
  * @param PageSelectWindowList
@@ -1347,10 +1439,13 @@
   var wsty = Number(parameters["WStatusY"] || 72);
   var wstw = Number(parameters["WStatusWidth"] || 408);
   var wsth = Number(parameters["WStatusHeight"] || 552);
-  var hitevast = String(parameters["HITandEVASystemTerm"] || 'true');
+  var wstop = Number(parameters["WStatusOpacity"] || 192);
+  var hitevast = String(parameters["HITandEVASystemTerm"] || "true");
 
   var expheader = String(parameters["ExpHeader"] || "");
-  var nextgauge = String(parameters["ExpNextGaugeVisible"] || 'true');
+  var nextgauge = String(parameters["ExpNextGaugeVisible"] || "true");
+  var nlgcolor1 = Number(parameters["ExpNextGaugeColor1"] || 30);
+  var nlgcolor2 = Number(parameters["ExpNextGaugeColor2"] || 31);
 
   var paramheader = String(parameters["ParametersHeader"] || "");
   var parambase = parameters["ParametersList"];
@@ -1399,6 +1494,8 @@
 
   var equipsheader = String(parameters["EquipmentsHeader"] || "");
   var maxeq = Number(parameters["maxEquipments"] || 6);
+  var slotv = String(parameters["SlotNameVisible"] || "true");
+  var slotw = Number(parameters["SlotNameWidth"] || 138);
 
   var profheader = String(parameters["ProfileHeader"] || "");
 
@@ -1406,8 +1503,9 @@
   var wsly = Number(parameters["PageSelectWindowY"] || 0);
   var wslw = Number(parameters["PageSelectWindowWidth"] || 816);
   var wslh = Number(parameters["PageSelectWindowHeight"] || 72);
-  var wslv = String(parameters["PageSelectWindowVisible"] || 'true');
+  var wslv = String(parameters["PageSelectWindowVisible"] || "true");
   var wslcl = Number(parameters["PageSelectWindowMaxCols"] || 4);
+  var wslop = Number(parameters["PageSelectWindowOpacity"] || 192);
   var wslbase = parameters["PageSelectWindowList"];
   var wslist = StructConvert(wslbase);
 
@@ -1415,7 +1513,7 @@
   var stpy = Number(parameters["StandingPictureY"] || 72);
   var stpw = Number(parameters["StandingPictureWidth"] || 408);
   var stph = Number(parameters["StandingPictureHeight"] || 435);
-  var stpc = String(parameters["STPictChange"] || 'true');
+  var stpc = String(parameters["STPictChange"] || "true");
   var stpckey = String(parameters["STPictChangeKey"] || "ok");
   var stpcse = String(parameters["STPictChangeSE"] || "Cursor2");
   var stpcsevol = Number(parameters["STPictChangeSEVolume"] || 90);
@@ -1539,7 +1637,7 @@
       var x2 = x + (xpnw + xpvw + xpmargin) * (i % xpcols);
       var y2 = y + lineHeight * (i % xplines) + (xparamheader ? lineHeight : 0);
       var xparamId = xparams[i].ExParamId;
-      if (hitevast === 'true' && xparamId < 2) {
+      if (hitevast === "true" && xparamId < 2) {
         var xparamName = TextManager.param(xparamId + 8);
       } else {
         var xparamName = xparams[i].ExParamName;
@@ -1642,13 +1740,25 @@
     var equips = this._actor.equips();
     var count = Math.min(equips.length, this.maxEquipmentLines());
     for (var i = 0; i < count; i++) {
-      this.drawItemName(equips[i], x, y2 + lineHeight * i);
+      if (slotv == "true") {
+        slotName = this.slotName(i);
+        this.changeTextColor(this.systemColor());
+        this.drawText(slotName, x, y2 + lineHeight * i, slotw, lineHeight);
+        this.drawItemName(equips[i], x+slotw, y2 + lineHeight * i,);
+      } else {
+        this.drawItemName(equips[i], x, y2 + lineHeight * i);
+      }
     }
   };
 
   Window_Status.prototype.maxEquipmentLines = function () {
     return maxeq;
   };
+
+  Window_Status.prototype.slotName = function(index) {
+    var slots = this._actor.equipSlots();
+    return this._actor ? $dataSystem.equipTypes[slots[index]] : '';
+};
 
   Window_Status.prototype.drawExpInfo = function (x, y) {
     var cwidth = this.contentsWidth() - x;
@@ -1660,8 +1770,8 @@
     var value3 = this._actor.currentLevelExp();
     var value4 = this._actor.nextLevelExp();
     var expRate = (value4 - value3 - value2) / (value4 - value3);
-    var color1 = this.textColor(30);
-    var color2 = this.textColor(31);
+    var color1 = this.nexpGaugeColor1();
+    var color2 = this.nexpGaugeColor2();
     if (this._actor.isMaxLevel()) {
       value1 = "-------";
       value2 = "-------";
@@ -1672,7 +1782,7 @@
       this.resetTextColor();
     }
     var y2 = y + (expheader ? lineHeight : 0);
-    if (nextgauge == 'true') {
+    if (nextgauge == "true") {
       this.drawGauge(x, y2 + lineHeight * 3, cwidth, expRate, color1, color2);
     }
     this.changeTextColor(this.systemColor());
@@ -1692,6 +1802,14 @@
     }
     var y2 = y + (profheader ? this.lineHeight() : 0);
     this.drawTextEx(this._actor.profile(), x, y2);
+  };
+
+  Window_Status.prototype.nexpGaugeColor1 = function () {
+    return this.textColor(nlgcolor1);
+  };
+
+  Window_Status.prototype.nexpGaugeColor2 = function () {
+    return this.textColor(nlgcolor2);
   };
 
   // Window_STList
@@ -1767,7 +1885,7 @@
   Window_STList.prototype.cursorDown = function (wrap) {
     var index = this.index();
     var maxItem = this.maxItems() - 1;
-    if (wslv == 'true') {
+    if (wslv == "true") {
       def_Window_STList_cursorDown.call(this, wrap);
     } else {
       if (index == maxItem) {
@@ -1784,7 +1902,7 @@
   Window_STList.prototype.cursorUp = function (wrap) {
     var index = this.index();
     var maxItem = this.maxItems() - 1;
-    if (wslv == 'true') {
+    if (wslv == "true") {
       def_Window_STList_cursorUp.call(this, wrap);
     } else {
       if (index == 0) {
@@ -1801,7 +1919,7 @@
   Window_STList.prototype.cursorRight = function (wrap) {
     var index = this.index();
     var maxItem = this.maxItems() - 1;
-    if (wslv == 'true') {
+    if (wslv == "true") {
       def_Window_STList_cursorRight.call(this, wrap);
     } else {
       if (index == maxItem) {
@@ -1818,7 +1936,7 @@
   Window_STList.prototype.cursorLeft = function (wrap) {
     var index = this.index();
     var maxItem = this.maxItems() - 1;
-    if (wslv == 'true') {
+    if (wslv == "true") {
       def_Window_STList_cursorLeft.call(this, wrap);
     } else {
       if (index == 0) {
@@ -1858,7 +1976,7 @@
 
   Sprite_STPict.prototype.drawStandingPicture = function () {
     var actorstpict = this._actor.faceName() + "_" + this._actor.faceIndex();
-    if (stpc == 'true' && this._pictlarge == true) {
+    if (stpc == "true" && this._pictlarge == true) {
       var bitmap = ImageManager.loadPicture(actorstpict + stpl);
     } else {
       var bitmap = ImageManager.loadPicture(actorstpict);
@@ -1879,7 +1997,7 @@
     this.PresetStandingPictures();
     this._listWindow = new Window_STList();
     this.addWindow(this._listWindow);
-    if (wslv === 'false') {
+    if (wslv === "false") {
       this._listWindow.hide();
       this._listWindow.deactivate();
     }
@@ -1895,10 +2013,12 @@
     sprite.y = stpy;
     this.addChild(sprite);
     this._statusStandingPict = sprite;
-    if (wslv === 'false') {
+    if (wslv === "false") {
       this._listWindow.activate();
       this._listWindow.select(0);
     }
+    this._statusWindow.opacity = wstop;
+    this._listWindow.opacity = wslop;
   };
 
   var _Scene_Status_createBackground = Scene_Status.prototype.createBackground;
@@ -1938,7 +2058,7 @@
     $gameParty.members().forEach(function (actor) {
       var actorstpict = actor.faceName() + "_" + actor.faceIndex();
       ImageManager.loadPicture(actorstpict);
-      if (stpc == 'true') {
+      if (stpc == "true") {
         ImageManager.loadPicture(actorstpict + stpl);
       }
     }, this);
@@ -1960,7 +2080,7 @@
     });
   };
 
-  if (stpc == 'true') {
+  if (stpc == "true") {
     var _Scene_Status_update = Scene_Status.prototype.update;
     Scene_Status.prototype.update = function () {
       _Scene_Status_update.call(this);
