@@ -55,6 +55,10 @@
  *  set in the plug-in parameter.
  *
  * Update History:
+ * ver.1.1.1 Fixed a bug that the display order of any parameters was out of order.
+ *           In the japanese version, Corrected a typographical error
+ *            in the plugin parameter description.
+ *           Code optimized.
  * ver.1.1 Added gradient color settings for gauges up to the next level,
  *         and setting the transparency of windows of status scene,
  *         and function of displaying actor's slot names.
@@ -754,6 +758,9 @@
  * 　　立ち絵のサイズは、プラグインパラメータで設定した数値に合わせるようにしてください。
  *
  * 【更新履歴】
+ * 　ver.1.1.1 各種能力値の表示順番がくずれていた不具合を修正。
+ *             日本語版における、プラグインパラメータの説明文の誤字を修正。
+ *             コードの最適化。
  * 　ver.1.1 次のレベルまでのゲージのグラデーションカラーの設定と、
  *           各種ウィンドウの透明度の設定、
  *           およびアクターのスロット名を表示する機能を追加
@@ -994,7 +1001,7 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc 特殊能力値の行数
+ * @desc 特殊能力値の列数
  * @default 2
  * @parent SpParameters
  *
@@ -1412,9 +1419,7 @@
  * @default
  */
 (function () {
-  var pluginName = decodeURIComponent(document.currentScript.src).match(
-    /([^\/]+)\.js$/
-  )[1];
+  var pluginName = decodeURIComponent(document.currentScript.src).match(/([^\/]+)\.js$/)[1];
   var parameters = PluginManager.parameters(pluginName);
 
   function StructConvert(basestruct) {
@@ -1602,16 +1607,17 @@
   Window_Status.prototype.drawParameters = function (x, y) {
     var cwidth = this.contentsWidth() - x;
     var lineHeight = this.lineHeight();
-
+    var colnum = 0;
     if (paramheader) {
       this.changeTextColor(this.systemColor());
       this.drawText(paramheader, x, y, cwidth);
     }
     for (var i = 0; i < params.length; i++) {
       var paramId = params[i].ParameterId;
-      var x2 = x + (paramnw + paramvw + parammargin) * (i % paramcols);
+      var linenum = i % paramlines;
+      var x2 = x + (paramnw + paramvw + parammargin) * colnum;
       var y2 =
-        y + lineHeight * (i % paramlines) + (paramheader ? lineHeight : 0);
+        y + lineHeight * linenum + (paramheader ? lineHeight : 0);
       this.changeTextColor(this.systemColor());
       this.drawText(TextManager.param(paramId), x2, y2, paramnw);
       this.resetTextColor();
@@ -1622,52 +1628,71 @@
         paramvw,
         "right"
       );
+      if (linenum == paramlines - 1) {
+        if (colnum < paramcols) {
+          colnum += 1;
+        }
+      }
     }
   };
 
   Window_Status.prototype.drawExParameters = function (x, y) {
     var cwidth = this.contentsWidth() - x;
     var lineHeight = this.lineHeight();
+    var colnum = 0;
     if (xparamheader) {
       this.changeTextColor(this.systemColor());
       this.drawText(xparamheader, x, y, cwidth);
     }
 
     for (var i = 0; i < xparams.length; i++) {
-      var x2 = x + (xpnw + xpvw + xpmargin) * (i % xpcols);
-      var y2 = y + lineHeight * (i % xplines) + (xparamheader ? lineHeight : 0);
       var xparamId = xparams[i].ExParamId;
+      var linenum = i % xplines;
       if (hitevast === "true" && xparamId < 2) {
         var xparamName = TextManager.param(xparamId + 8);
       } else {
         var xparamName = xparams[i].ExParamName;
       }
+      var x2 = x + (xpnw + xpvw + xpmargin) * colnum;
+      var y2 = y + lineHeight * linenum + (xparamheader ? lineHeight : 0);
       var percent = Math.floor(this._actor.xparam(xparamId) * 100);
       this.changeTextColor(this.systemColor());
       this.drawText(xparamName, x2, y2, xpnw);
       this.resetTextColor();
       this.drawText(percent + "%", x2 + xpnw, y2, xpvw, "right");
+      if (linenum == xplines - 1) {
+        if (colnum < xpcols) {
+          colnum += 1;
+        }
+      }
     }
   };
 
   Window_Status.prototype.drawSpParameters = function (x, y) {
     var cwidth = this.contentsWidth() - x;
     var lineHeight = this.lineHeight();
+    var colnum = 0;
     if (sparamheader) {
       this.changeTextColor(this.systemColor());
       this.drawText(sparamheader, x, y, cwidth);
     }
 
     for (var i = 0; i < sparams.length; i++) {
-      var x2 = x + (spnw + spvw + spmargin) * (i % spcols);
-      var y2 = y + lineHeight * (i % splines) + (sparamheader ? lineHeight : 0);
       var sparamId = sparams[i].SpParamId;
+      var linenum = i % splines;
       var sparamName = sparams[i].SpParamName;
+      var x2 = x + (spnw + spvw + spmargin) * colnum;
+      var y2 = y + lineHeight * linenum + (sparamheader ? lineHeight : 0);
       var percent = Math.floor(this._actor.sparam(sparamId) * 100);
       this.changeTextColor(this.systemColor());
       this.drawText(sparamName, x2, y2, spnw);
       this.resetTextColor();
       this.drawText(percent + "%", x2 + spnw, y2, spvw, "right");
+      if (linenum == splines - 1) {
+        if (colnum < spcols) {
+          colnum += 1;
+        }
+      }
     }
   };
 
