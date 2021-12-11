@@ -19,6 +19,8 @@
  *  clicking / tapping the standing picture itself,
  *  you can add the function to switch with another corresponding standing picture alternately.
  *  This function is intended for switching between small and large size images.
+ * ･It is compatible with RMMZ plugin "Gauge Shape Customize",
+ *  and it is possible to change the shape of the gauge to the next level.
  *
  * How to add / set standing pictures:
  * Add the image file with the file name,
@@ -57,6 +59,11 @@
  *  set in the plug-in parameter.
  *
  * Update History:
+ * ver.1.0.1 Fixed a bug that the display order of any parameters was out of order.
+ *           In the japanese version, Corrected a typographical error
+ *            in the plugin parameter description.
+ *           Fixed omission of help.
+ *           Code optimized.
  * ver.1.0 Released.
  *
  * ---
@@ -112,7 +119,7 @@
  * @desc Height of status window.
  * @default 208
  * @parent Status Window
- * 
+ *
  * @param WStatusOpacity
  * @type number
  * @min 0
@@ -155,7 +162,7 @@
  * @desc Height of status detail window.
  * @default 288
  * @parent Status Detail Window
- * 
+ *
  * @param WStatusDetailOpacity
  * @type number
  * @min 0
@@ -201,7 +208,7 @@
  *
  * @param Next EXP Gauge Shape
  * @desc Shape of the Next Level gauge. Only valid when "GaugeShapeCustomize" is turned on.
- * @default 
+ * @default
  * @parent EXP
  *
  * @param Parameters
@@ -463,7 +470,7 @@
  * @desc Max Number of equipments.
  * @default 6
  * @parent Equipments
- * 
+ *
  * @param SlotNameVisible
  * @desc Which setting to display actor's slots name.
  * @type boolean
@@ -471,7 +478,7 @@
  * @off Don't show
  * @default true
  * @parent Equipments
- * 
+ *
  * @param SlotNameWidth
  * @type number
  * @min 0
@@ -536,7 +543,7 @@
  * If you set "0", display all set items on one line.
  * @default 0
  * @parent PageSelectWindow
- * 
+ *
  * @param PageSelectWindowOpacity
  * @type number
  * @min 0
@@ -772,6 +779,8 @@
  * 　立ち絵自体をクリック・タップしたりすることで、
  * 　対応するもう一枚の立ち絵に切り替える機能をつけられます。
  * 　こちらの機能は、スモールサイズとラージサイズの画像の切り替えを想定しています。
+ * ・MZ用プラグイン「GaugeShapeCustomize」に対応しており、
+ * 　次のレベルまでのゲージの形状を変更することが可能です。
  *
  * 【立ち絵の追加・設定方法】
  * 　img/pictureフォルダに、
@@ -801,6 +810,10 @@
  * 　　立ち絵のサイズは、プラグインパラメータで設定した数値に合わせるようにしてください。
  *
  * 【更新履歴】
+ * 　ver.1.0.1 各種能力値の表示順番がくずれていた不具合を修正。
+ * 　　　　　　 日本語版における、プラグインパラメータの説明文の誤字を修正。
+ * 　　　　　　 ヘルプの表記漏れを修正。
+ * 　　　　　　 コードの最適化。
  * 　ver.1.0 公開
  *
  * ---
@@ -856,7 +869,7 @@
  * @desc ステータスウィンドウの高さ
  * @default 208
  * @parent Status Window
- * 
+ *
  * @param WStatusOpacity
  * @type number
  * @min 0
@@ -899,7 +912,7 @@
  * @desc ステータス詳細ウィンドウの高さ
  * @default 288
  * @parent Status Detail Window
- * 
+ *
  * @param WStatusDetailOpacity
  * @type number
  * @min 0
@@ -945,7 +958,7 @@
  *
  * @param Next EXP Gauge Shape
  * @desc 次のレベルまでのゲージの形状を設定します。「GaugeShapeCustomize」をオンにしている時のみ有効です。
- * @default 
+ * @default
  * @parent EXP
  *
  * @param Parameters
@@ -1085,7 +1098,7 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc 特殊能力値の行数
+ * @desc 特殊能力値の列数
  * @default 2
  * @parent SpParameters
  *
@@ -1207,7 +1220,7 @@
  * @desc 表示する装備欄の最大数
  * @default 6
  * @parent Equipments
- * 
+ *
  * @param SlotNameVisible
  * @desc アクターのスロット名を表示するかどうか
  * @type boolean
@@ -1215,7 +1228,7 @@
  * @off 表示しない
  * @default true
  * @parent Equipments
- * 
+ *
  * @param SlotNameWidth
  * @type number
  * @min 0
@@ -1288,7 +1301,7 @@
  * @desc ページ選択ウィンドウの透明度
  * @default 192
  * @parent PageSelectWindow
- * 
+ *
  * @param PageSelectWindowList
  * @desc 表示させるページのリスト
  * @type struct<PageList>[]
@@ -1503,9 +1516,7 @@
  * @default
  */
 (() => {
-  const pluginName = decodeURIComponent(document.currentScript.src).match(
-    /([^\/]+)\.js$/
-  )[1];
+  const pluginName = decodeURIComponent(document.currentScript.src).match(/([^\/]+)\.js$/)[1];
   const parameters = PluginManager.parameters(pluginName);
 
   function StructConvert(basestruct) {
@@ -1774,16 +1785,16 @@
   Window_StatusDetail.prototype.drawParameters = function (x, y) {
     const cwidth = this.contentsWidth() - x;
     const lineHeight = this.lineHeight();
-
+    let colnum = 0;
     if (paramheader) {
       this.changeTextColor(this.systemColor());
       this.drawText(paramheader, x, y, cwidth);
     }
     for (let i = 0; i < params.length; i++) {
       const paramId = params[i].ParameterId;
-      const x2 = x + (paramnw + paramvw + parammargin) * (i % paramcols);
-      const y2 =
-        y + lineHeight * (i % paramlines) + (paramheader ? lineHeight : 0);
+      const linenum = i % paramlines;
+      const x2 = x + (paramnw + paramvw + parammargin) * colnum;
+      const y2 = y + lineHeight * linenum + (paramheader ? lineHeight : 0);
       this.changeTextColor(this.systemColor());
       this.drawText(TextManager.param(paramId), x2, y2, paramnw);
       this.resetTextColor();
@@ -1794,54 +1805,70 @@
         paramvw,
         "right"
       );
+      if (linenum == paramlines - 1) {
+        if (colnum < paramcols) {
+          colnum += 1;
+        }
+      }
     }
   };
 
   Window_StatusDetail.prototype.drawExParameters = function (x, y) {
     const cwidth = this.contentsWidth() - x;
     const lineHeight = this.lineHeight();
+    let colnum = 0;
     if (xparamheader) {
       this.changeTextColor(this.systemColor());
       this.drawText(xparamheader, x, y, cwidth);
     }
 
     for (let i = 0; i < xparams.length; i++) {
-      const x2 = x + (xpnw + xpvw + xpmargin) * (i % xpcols);
-      const y2 =
-        y + lineHeight * (i % xplines) + (xparamheader ? lineHeight : 0);
       const xparamId = xparams[i].ExParamId;
+      const linenum = i % xplines;
       if (hitevast === "true" && xparamId < 2) {
         xparamName = TextManager.param(xparamId + 8);
       } else {
         xparamName = xparams[i].ExParamName;
       }
+      const x2 = x + (xpnw + xpvw + xpmargin) * colnum;
+      const y2 = y + lineHeight * linenum + (xparamheader ? lineHeight : 0);
       const percent = Math.floor(this._actor.xparam(xparamId) * 100);
       this.changeTextColor(this.systemColor());
       this.drawText(xparamName, x2, y2, xpnw);
       this.resetTextColor();
       this.drawText(percent + "%", x2 + xpnw, y2, xpvw, "right");
+      if (linenum == xplines - 1) {
+        if (colnum < xpcols) {
+          colnum += 1;
+        }
+      }
     }
   };
 
   Window_StatusDetail.prototype.drawSpParameters = function (x, y) {
     const cwidth = this.contentsWidth() - x;
     const lineHeight = this.lineHeight();
+    let colnum = 0;
     if (sparamheader) {
       this.changeTextColor(this.systemColor());
       this.drawText(sparamheader, x, y, cwidth);
     }
-
     for (let i = 0; i < sparams.length; i++) {
-      const x2 = x + (spnw + spvw + spmargin) * (i % spcols);
-      const y2 =
-        y + lineHeight * (i % splines) + (sparamheader ? lineHeight : 0);
       const sparamId = sparams[i].SpParamId;
+      const linenum = i % splines;
       const sparamName = sparams[i].SpParamName;
+      const x2 = x + (spnw + spvw + spmargin) * colnum;
+      const y2 = y + lineHeight * linenum + (sparamheader ? lineHeight : 0);
       const percent = Math.floor(this._actor.sparam(sparamId) * 100);
       this.changeTextColor(this.systemColor());
       this.drawText(sparamName, x2, y2, spnw);
       this.resetTextColor();
       this.drawText(percent + "%", x2 + spnw, y2, spvw, "right");
+      if (linenum == splines - 1) {
+        if (colnum < spcols) {
+          colnum += 1;
+        }
+      }
     }
   };
 
@@ -1894,9 +1921,9 @@
         y +
         lineHeight * Math.floor(i / elrcols) +
         (eresistheader ? lineHeight : 0);
-        const ElementRateId = eresist[i].ElementId;
-        const ElementRateIcon = eresist[i].ElementIconId;
-        const percent = Math.floor(this._actor.elementRate(ElementRateId) * 100);
+      const ElementRateId = eresist[i].ElementId;
+      const ElementRateIcon = eresist[i].ElementIconId;
+      const percent = Math.floor(this._actor.elementRate(ElementRateId) * 100);
       this.drawIcon(ElementRateIcon, x2, y2);
       this.drawText(percent + "%", x2 + iconBoxWidth, y2, 60, "right");
     }
@@ -1918,7 +1945,7 @@
         slotName = this.actorSlotName(this._actor, i);
         this.changeTextColor(ColorManager.systemColor());
         this.drawText(slotName, x, y2 + lineHeight * i, slotw, lineHeight);
-        this.drawItemName(equips[i], x+slotw, y2 + lineHeight * i, cwidth - slotw);
+        this.drawItemName(equips[i], x + slotw, y2 + lineHeight * i, cwidth - slotw);
       } else {
         this.drawItemName(equips[i], x, y2 + lineHeight * i, cwidth);
       }
