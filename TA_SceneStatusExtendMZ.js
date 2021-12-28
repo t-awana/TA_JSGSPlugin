@@ -59,6 +59,10 @@
  *  set in the plug-in parameter.
  *
  * Update History:
+ * ver.1.0.2 In the japanese version, refined the plugin parameter description.
+ *           Added the function to switch the display setting of the standing picture.
+ *           Pre-loading process of standing pictures has been optimized.
+ *           Code optimized.
  * ver.1.0.1 Fixed a bug that the display order of any parameters was out of order.
  *           In the japanese version, Corrected a typographical error
  *            in the plugin parameter description.
@@ -85,7 +89,7 @@
  * @dir img/system
  * @default
  *
- * @param Status Window
+ * @param StatusWindow
  * @desc Status window setting.
  *
  * @param WStatusX
@@ -94,7 +98,7 @@
  * @max 9007
  * @desc X coordinate of status window.
  * @default 0
- * @parent Status Window
+ * @parent StatusWindow
  *
  * @param WStatusY
  * @type number
@@ -102,7 +106,7 @@
  * @max 9007
  * @desc Y coordinate of status window.
  * @default 120
- * @parent Status Window
+ * @parent StatusWindow
  *
  * @param WStatusWidth
  * @type number
@@ -110,7 +114,7 @@
  * @max 9007
  * @desc Width of status window.
  * @default 404
- * @parent Status Window
+ * @parent StatusWindow
  *
  * @param WStatusHeight
  * @type number
@@ -118,7 +122,7 @@
  * @max 9007
  * @desc Height of status window.
  * @default 208
- * @parent Status Window
+ * @parent StatusWindow
  *
  * @param WStatusOpacity
  * @type number
@@ -126,9 +130,9 @@
  * @max 255
  * @desc Opacity of status window.
  * @default 192
- * @parent Status Window
+ * @parent StatusWindow
  *
- * @param Status Detail Window
+ * @param StatusDetailWindow
  * @desc Status detail window setting
  *
  * @param WStatusDetailX
@@ -137,7 +141,7 @@
  * @max 9007
  * @desc X coordinate of status detail window.
  * @default 0
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param WStatusDetailY
  * @type number
@@ -145,7 +149,7 @@
  * @max 9007
  * @desc Y coordinate of status detail window.
  * @default 328
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param WStatusDetailWidth
  * @type number
@@ -153,7 +157,7 @@
  * @max 9007
  * @desc Width of status detail window.
  * @default 404
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param WStatusDetailHeight
  * @type number
@@ -161,7 +165,7 @@
  * @max 9007
  * @desc Height of status detail window.
  * @default 288
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param WStatusDetailOpacity
  * @type number
@@ -169,7 +173,7 @@
  * @max 255
  * @desc Opacity of status detail window.
  * @default 192
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param HITandEVASystemTerm
  * @desc Which setting to use when displaying hit rate and evasion terms.
@@ -177,11 +181,11 @@
  * @on System Terms
  * @off Plugin Settings
  * @default true
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param EXP
  * @desc Exp setting
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param ExpHeader
  * @desc Header of Exp
@@ -213,7 +217,7 @@
  *
  * @param Parameters
  * @desc Parameters setting.
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param ParametersHeader
  * @desc Header of Parameters.
@@ -268,7 +272,7 @@
  *
  * @param ExParameters
  * @desc Ex-parameters setting.
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param ExParametersHeader
  * @desc Header of Ex-parameters.
@@ -323,7 +327,7 @@
  *
  * @param SpParameters
  * @desc Sp-parameters setting.
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param SpParametersHeader
  * @desc Header of sp-parameters.
@@ -378,7 +382,7 @@
  *
  * @param StateResist
  * @desc State resist setting.
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param StateResistHeader
  * @desc Header of state resist.
@@ -417,7 +421,7 @@
  *
  * @param ElementResist
  * @desc Element resist setting.
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param ElementResistHeader
  * @desc Header of element resist.
@@ -456,7 +460,7 @@
  *
  * @param Equipments
  * @desc Equipments setting.
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param EquipmentsHeader
  * @desc Header of equipments.
@@ -490,7 +494,7 @@
  * @param ProfileHeader
  * @desc Header of profile.
  * @default Profile
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param PageSelectWindow
  * @desc Page select window setting.
@@ -561,6 +565,14 @@
  * @param StandingPicture
  * @desc Standing picture setting.
  *
+ * @param STPictShow
+ * @desc Setting about standing picture.
+ * @type boolean
+ * @on Show
+ * @off Don't show
+ * @default true
+ * @parent StandingPicture
+ * 
  * @param StandingPictureX
  * @type number
  * @min -9007
@@ -604,7 +616,7 @@
  * @param STPictChangeKey
  * @desc Key for changing standing picture.
  * @default ok
- * @parent StandingPicture
+ * @parent STPictChange
  *
  * @param STPictChangeSE
  * @desc SE on changing standing picture. Select "None" to disable it.
@@ -612,27 +624,27 @@
  * @require 1
  * @dir audio/se
  * @default Cursor3
- * @parent StandingPicture
+ * @parent STPictChange
  *
  * @param STPictChangeSEVolume
  * @desc Volume of SE on changing standing picture.
  * @default 90
- * @parent StandingPicture
+ * @parent STPictChange
  *
  * @param STPictChangeSEPitch
  * @desc Pitch of SE on changing standing picture.
  * @default 100
- * @parent StandingPicture
+ * @parent STPictChange
  *
  * @param STPictChangeSEPan
  * @desc Pan of SE on changing standing picture.
  * @default 0
- * @parent StandingPicture
+ * @parent STPictChange
  *
  * @param STPictLargeLetters
  * @desc Identifier at the end of the large size standing picture file.
  * @default _L
- * @parent StandingPicture
+ * @parent STPictChange
  *
  */
 /*~struct~ElementList:
@@ -810,6 +822,10 @@
  * 　　立ち絵のサイズは、プラグインパラメータで設定した数値に合わせるようにしてください。
  *
  * 【更新履歴】
+ *   var.1.0.2 日本語版における、プラグインパラメータの説明文を改定。
+ *             立ち絵の表示設定を切り替える機能を追加。
+ *             立ち絵の事前読み込み処理を最適化。
+ *             コードの最適化。
  * 　ver.1.0.1 各種能力値の表示順番がくずれていた不具合を修正。
  * 　　　　　　 日本語版における、プラグインパラメータの説明文の誤字を修正。
  * 　　　　　　 ヘルプの表記漏れを修正。
@@ -822,124 +838,124 @@
  * https://opensource.org/licenses/mit-license.php
  *
  * @param StatusBackground
- * @desc ステータス画面の背景　「なし」で無効
+ * @desc ステータス画面の背景です。「なし」で無効になります。
  * @type file
  * @require 1
  * @dir img/system
  * @default
  *
  * @param StatusForeground
- * @desc ステータス画面の前景　「なし」で無効
+ * @desc ステータス画面の前景です。「なし」で無効になります。
  * @type file
  * @require 1
  * @dir img/system
  * @default
  *
- * @param Status Window
- * @desc ステータスウィンドウのパラメーター設定
+ * @param StatusWindow
+ * @desc ステータスウィンドウのパラメーター設定です。
  *
  * @param WStatusX
  * @type number
  * @min -9007
  * @max 9007
- * @desc ステータスウィンドウのX座標
+ * @desc ステータスウィンドウのX座標です。
  * @default 0
- * @parent Status Window
+ * @parent StatusWindow
  *
  * @param WStatusY
  * @type number
  * @min -9007
  * @max 9007
- * @desc ステータスウィンドウのY座標
+ * @desc ステータスウィンドウのY座標です。
  * @default 120
- * @parent Status Window
+ * @parent StatusWindow
  *
  * @param WStatusWidth
  * @type number
  * @min 0
  * @max 9007
- * @desc ステータスウィンドウの横幅
+ * @desc ステータスウィンドウの横幅です。
  * @default 404
- * @parent Status Window
+ * @parent StatusWindow
  *
  * @param WStatusHeight
  * @type number
  * @min 0
  * @max 9007
- * @desc ステータスウィンドウの高さ
+ * @desc ステータスウィンドウの高さです。
  * @default 208
- * @parent Status Window
+ * @parent StatusWindow
  *
  * @param WStatusOpacity
  * @type number
  * @min 0
  * @max 255
- * @desc ステータスウィンドウの透明度
+ * @desc ステータスウィンドウの透明度です。
  * @default 192
- * @parent Status Window
+ * @parent StatusWindow
  *
- * @param Status Detail Window
- * @desc ステータス詳細ウィンドウのパラメーター設定
+ * @param StatusDetailWindow
+ * @desc ステータス詳細ウィンドウのパラメーター設定です。
  *
  * @param WStatusDetailX
  * @type number
  * @min -9007
  * @max 9007
- * @desc ステータス詳細ウィンドウのX座標
+ * @desc ステータス詳細ウィンドウのX座標です。
  * @default 0
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param WStatusDetailY
  * @type number
  * @min -9007
  * @max 9007
- * @desc ステータス詳細ウィンドウのY座標
+ * @desc ステータス詳細ウィンドウのY座標です。
  * @default 328
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param WStatusDetailWidth
  * @type number
  * @min 0
  * @max 9007
- * @desc ステータス詳細ウィンドウの横幅
+ * @desc ステータス詳細ウィンドウの横幅です。
  * @default 404
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param WStatusDetailHeight
  * @type number
  * @min 0
  * @max 9007
- * @desc ステータス詳細ウィンドウの高さ
+ * @desc ステータス詳細ウィンドウの高さです。
  * @default 288
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param WStatusDetailOpacity
  * @type number
  * @min 0
  * @max 255
- * @desc ステータス詳細ウィンドウの透明度
+ * @desc ステータス詳細ウィンドウの透明度です。
  * @default 192
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param HITandEVASystemTerm
- * @desc 命中率と回避率の用語表示に、システムの用語欄で設定したものを優先して使うかどうか
+ * @desc 命中率と回避率の用語表示に、システムの用語欄で設定したものを優先して使うかどうかを設定します。
  * @type boolean
  * @on システム側を優先
  * @off プラグイン側を優先
  * @default true
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param EXP
- * @desc 経験値のパラメーター設定
- * @parent Status Detail Window
+ * @desc 経験値のパラメーター設定です。
+ * @parent StatusDetailWindow
  *
  * @param ExpHeader
- * @desc 経験値欄の見出し
+ * @desc 経験値欄の見出しです。
  * @default 経験値
  * @parent EXP
  *
  * @param ExpNextGaugeVisible
- * @desc 次のレベルまでのゲージを表示するかどうか
+ * @desc 次のレベルまでのゲージを表示するかどうかを設定します。
  * @type boolean
  * @on 表示する
  * @off 表示しない
@@ -962,16 +978,16 @@
  * @parent EXP
  *
  * @param Parameters
- * @desc 能力値のパラメーター設定
- * @parent Status Detail Window
+ * @desc 能力値のパラメーター設定です。
+ * @parent StatusDetailWindow
  *
  * @param ParametersHeader
- * @desc 能力値欄の見出し
+ * @desc 能力値欄の見出しです。
  * @default 能力値
  * @parent Parameters
  *
  * @param ParametersList
- * @desc 表示したい能力値のリスト
+ * @desc 表示したい能力値のリストです。
  * @type struct<ParamList>[]
  * @default ["{\"ParameterId\":\"2\"}","{\"ParameterId\":\"3\"}","{\"ParameterId\":\"4\"}","{\"ParameterId\":\"5\"}","{\"ParameterId\":\"6\"}","{\"ParameterId\":\"7\"}"]
  * @parent Parameters
@@ -980,7 +996,7 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc 能力値の行数
+ * @desc 能力値の行数です。
  * @default 6
  * @parent Parameters
  *
@@ -988,7 +1004,7 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc 能力値の列数
+ * @desc 能力値の列数です。
  * @default 1
  * @parent Parameters
  *
@@ -996,7 +1012,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 能力値の項目名の幅
+ * @desc 能力値の項目名の幅です。
  * @default 160
  * @parent Parameters
  *
@@ -1004,7 +1020,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 能力値の値の幅
+ * @desc 能力値の値の幅です。
  * @default 50
  * @parent Parameters
  *
@@ -1012,21 +1028,21 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 能力値同士の間隔
+ * @desc 能力値同士の間隔です。
  * @default 0
  * @parent Parameters
  *
  * @param ExParameters
- * @desc 追加能力値のパラメーター設定
- * @parent Status Detail Window
+ * @desc 追加能力値のパラメーター設定です。
+ * @parent StatusDetailWindow
  *
  * @param ExParametersHeader
- * @desc 追加能力値欄の見出し
+ * @desc 追加能力値欄の見出しです。
  * @default 追加能力値
  * @parent ExParameters
  *
  * @param ExParametersList
- * @desc 表示したい追加能力値のリスト
+ * @desc 表示したい追加能力値のリストです。
  * @type struct<ExParamList>[]
  * @default ["{\"ExParamName\":\"命中率\",\"ExParamId\":\"0\"}","{\"ExParamName\":\"回避率\",\"ExParamId\":\"1\"}","{\"ExParamName\":\"会心率\",\"ExParamId\":\"2\"}","{\"ExParamName\":\"会心回避率\",\"ExParamId\":\"3\"}","{\"ExParamName\":\"魔法回避率\",\"ExParamId\":\"4\"}","{\"ExParamName\":\"魔法反射率\",\"ExParamId\":\"5\"}","{\"ExParamName\":\"反撃率\",\"ExParamId\":\"6\"}","{\"ExParamName\":\"HP再生率\",\"ExParamId\":\"7\"}","{\"ExParamName\":\"MP再生率\",\"ExParamId\":\"8\"}","{\"ExParamName\":\"TP再生率\",\"ExParamId\":\"9\"}"]
  * @parent ExParameters
@@ -1035,7 +1051,7 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc 追加能力値の行数
+ * @desc 追加能力値の行数です。
  * @default 5
  * @parent ExParameters
  *
@@ -1043,7 +1059,7 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc 追加能力値の列数
+ * @desc 追加能力値の列数です。
  * @default 2
  * @parent ExParameters
  *
@@ -1051,7 +1067,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 追加能力値の項目名の幅
+ * @desc 追加能力値の項目名の幅です。
  * @default 110
  * @parent ExParameters
  *
@@ -1059,7 +1075,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 追加能力値の値の幅
+ * @desc 追加能力値の値の幅です。
  * @default 50
  * @parent ExParameters
  *
@@ -1067,21 +1083,21 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 追加能力値同士の間隔
+ * @desc 追加能力値同士の間隔です。
  * @default 30
  * @parent ExParameters
  *
  * @param SpParameters
- * @desc 特殊能力値のパラメーター設定
- * @parent Status Detail Window
+ * @desc 特殊能力値のパラメーター設定です。
+ * @parent StatusDetailWindow
  *
  * @param SpParametersHeader
- * @desc 特殊能力値欄の見出し
+ * @desc 特殊能力値欄の見出しです。
  * @default 特殊能力値
  * @parent SpParameters
  *
  * @param SpParametersList
- * @desc 表示したい特殊能力値のリスト
+ * @desc 表示したい特殊能力値のリストです。
  * @type struct<SpParamList>[]
  * @default ["{\"SpParamName\":\"狙われやすさ\",\"SpParamId\":\"0\"}","{\"SpParamName\":\"防御効果\",\"SpParamId\":\"1\"}","{\"SpParamName\":\"回復効果\",\"SpParamId\":\"2\"}","{\"SpParamName\":\"薬の知識\",\"SpParamId\":\"3\"}","{\"SpParamName\":\"MP消費\",\"SpParamId\":\"4\"}","{\"SpParamName\":\"TPチャージ率\",\"SpParamId\":\"5\"}","{\"SpParamName\":\"物理ダメージ率\",\"SpParamId\":\"6\"}","{\"SpParamName\":\"魔法ダメージ率\",\"SpParamId\":\"7\"}","{\"SpParamName\":\"床ダメージ率\",\"SpParamId\":\"8\"}","{\"SpParamName\":\"獲得経験率\",\"SpParamId\":\"9\"}"]
  * @parent SpParameters
@@ -1090,7 +1106,7 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc 特殊能力値の行数
+ * @desc 特殊能力値の行数です。
  * @default 5
  * @parent SpParameters
  *
@@ -1098,7 +1114,7 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc 特殊能力値の列数
+ * @desc 特殊能力値の列数です。
  * @default 2
  * @parent SpParameters
  *
@@ -1106,7 +1122,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 特殊能力値の項目名の幅
+ * @desc 特殊能力値の項目名の幅です。
  * @default 110
  * @parent SpParameters
  *
@@ -1114,7 +1130,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 特殊能力値の値の幅
+ * @desc 特殊能力値の値の幅です。
  * @default 50
  * @parent SpParameters
  *
@@ -1122,21 +1138,21 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 特殊能力値同士の間隔
+ * @desc 特殊能力値同士の間隔です。
  * @default 30
  * @parent SpParameters
  *
  * @param StateResist
- * @desc ステート有効度のパラメーター設定
- * @parent Status Detail Window
+ * @desc ステート有効度のパラメーター設定です。
+ * @parent StatusDetailWindow
  *
  * @param StateResistHeader
- * @desc ステート有効度欄の見出し
+ * @desc ステート有効度欄の見出しです。
  * @default 状態異常有効度
  * @parent StateResist
  *
  * @param StateResistList
- * @desc 有効度を表示するステートのリスト
+ * @desc 有効度を表示するステートのリストです。
  * @type struct<StateList>[]
  * @default ["{\"StateId\":\"1\"}","{\"StateId\":\"4\"}","{\"StateId\":\"5\"}","{\"StateId\":\"6\"}","{\"StateId\":\"7\"}","{\"StateId\":\"8\"}","{\"StateId\":\"9\"}","{\"StateId\":\"10\"}","{\"StateId\":\"12\"}","{\"StateId\":\"13\"}"]
  * @parent StateResist
@@ -1145,7 +1161,7 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc ステート有効度の1行あたりの列数
+ * @desc ステート有効度の1行あたりの列数です。
  * @default 3
  * @parent StateResist
  *
@@ -1153,7 +1169,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ステート有効度の値の幅
+ * @desc ステート有効度の値の幅です。
  * @default 60
  * @parent StateResist
  *
@@ -1161,21 +1177,21 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ステート有効度同士の間隔
+ * @desc ステート有効度同士の間隔です。
  * @default 20
  * @parent StateResist
  *
  * @param ElementResist
- * @desc 属性有効度のパラメーター設定
- * @parent Status Detail Window
+ * @desc 属性有効度のパラメーター設定です。
+ * @parent StatusDetailWindow
  *
  * @param ElementResistHeader
- * @desc 属性有効度欄の見出し
+ * @desc 属性有効度欄の見出しです。
  * @default 属性有効度
  * @parent ElementResist
  *
  * @param ElementResistList
- * @desc 有効度を表示する属性のリスト
+ * @desc 有効度を表示する属性のリストです。
  * @type struct<ElementList>[]
  * @default ["{\"ElementId\":\"1\",\"ElementIconId\":\"76\"}","{\"ElementId\":\"2\",\"ElementIconId\":\"64\"}","{\"ElementId\":\"3\",\"ElementIconId\":\"65\"}","{\"ElementId\":\"4\",\"ElementIconId\":\"66\"}","{\"ElementId\":\"5\",\"ElementIconId\":\"67\"}","{\"ElementId\":\"6\",\"ElementIconId\":\"68\"}","{\"ElementId\":\"7\",\"ElementIconId\":\"69\"}","{\"ElementId\":\"8\",\"ElementIconId\":\"70\"}","{\"ElementId\":\"9\",\"ElementIconId\":\"71\"}"]
  * @parent ElementResist
@@ -1184,7 +1200,7 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc 属性有効度の1行あたりの列数
+ * @desc 属性有効度の1行あたりの列数です。
  * @default 3
  * @parent ElementResist
  *
@@ -1192,7 +1208,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 属性有効度の値の幅
+ * @desc 属性有効度の値の幅です。
  * @default 60
  * @parent ElementResist
  *
@@ -1200,16 +1216,16 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 属性有効度同士の間隔
+ * @desc 属性有効度同士の間隔です。
  * @default 30
  * @parent ElementResist
  *
  * @param Equipments
- * @desc 装備欄のパラメーター設定
- * @parent Status Detail Window
+ * @desc 装備欄のパラメーター設定です。
+ * @parent StatusDetailWindow
  *
  * @param EquipmentsHeader
- * @desc 装備欄の見出し
+ * @desc 装備欄の見出しです。
  * @default 現在の装備
  * @parent Equipments
  *
@@ -1217,12 +1233,12 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 表示する装備欄の最大数
+ * @desc 表示する装備欄の最大数です。
  * @default 6
  * @parent Equipments
  *
  * @param SlotNameVisible
- * @desc アクターのスロット名を表示するかどうか
+ * @desc アクターのスロット名を表示するかどうかを設定します。
  * @type boolean
  * @on 表示する
  * @off 表示しない
@@ -1233,20 +1249,20 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc アクターのスロット名を表示するときのスロット名の幅
+ * @desc アクターのスロット名を表示するときのスロット名の幅です。
  * @default 138
  * @parent SlotNameVisible
  *
  * @param ProfileHeader
- * @desc プロフィール欄の見出し
+ * @desc プロフィール欄の見出しです。
  * @default プロフィール
- * @parent Status Detail Window
+ * @parent StatusDetailWindow
  *
  * @param PageSelectWindow
- * @desc ページ選択ウィンドウのパラメーター設定
+ * @desc ページ選択ウィンドウのパラメーター設定です。
  *
  * @param PageSelectWindowVisible
- * @desc ページ選択ウィンドウを表示するかどうか
+ * @desc ページ選択ウィンドウを表示するかどうかを設定します。
  * @type boolean
  * @on 表示する
  * @off 表示しない
@@ -1257,7 +1273,7 @@
  * @type number
  * @min -9007
  * @max 9007
- * @desc ページ選択ウィンドウのX座標
+ * @desc ページ選択ウィンドウのX座標です。
  * @default 0
  * @parent PageSelectWindow
  *
@@ -1265,7 +1281,7 @@
  * @type number
  * @min -9007
  * @max 9007
- * @desc ページ選択ウィンドウのY座標
+ * @desc ページ選択ウィンドウのY座標です。
  * @default 52
  * @parent PageSelectWindow
  *
@@ -1273,7 +1289,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ページ選択ウィンドウの幅
+ * @desc ページ選択ウィンドウの幅です。
  * @default 808
  * @parent PageSelectWindow
  *
@@ -1281,7 +1297,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ページ選択ウィンドウの高さ
+ * @desc ページ選択ウィンドウの高さです。
  * @default 68
  * @parent PageSelectWindow
  *
@@ -1289,8 +1305,8 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ページ選択ウィンドウの一行あたりに表示する項目数
- * 0を指定すると、設定した項目全てを一行に表示する
+ * @desc ページ選択ウィンドウの一行あたりに表示する項目数です。
+ * 0を指定すると、設定した項目全てを一行に表示します。
  * @default 0
  * @parent PageSelectWindow
  *
@@ -1298,24 +1314,32 @@
  * @type number
  * @min 0
  * @max 255
- * @desc ページ選択ウィンドウの透明度
+ * @desc ページ選択ウィンドウの透明度です。
  * @default 192
  * @parent PageSelectWindow
  *
  * @param PageSelectWindowList
- * @desc 表示させるページのリスト
+ * @desc 表示させるページのリストです。
  * @type struct<PageList>[]
  * @default ["{\"PageContents\":\"Exp\",\"PageName\":\"経験値\"}","{\"PageContents\":\"Param\",\"PageName\":\"能力値\"}","{\"PageContents\":\"ExParam\",\"PageName\":\"追加能力値\"}","{\"PageContents\":\"SpParam\",\"PageName\":\"特殊能力値\"}","{\"PageContents\":\"StateResist\",\"PageName\":\"ST有効度\"}","{\"PageContents\":\"ElementResist\",\"PageName\":\"属性有効度\"}","{\"PageContents\":\"Equips\",\"PageName\":\"装備\"}","{\"PageContents\":\"Profile\",\"PageName\":\"プロフィール\"}"]
  * @parent PageSelectWindow
  *
  * @param StandingPicture
- * @desc 立ち絵のパラメーター設定
+ * @desc 立ち絵のパラメーター設定です。
  *
+ * @param STPictShow
+ * @desc 立ち絵を表示するかどうかを設定します。
+ * @type boolean
+ * @on 表示する
+ * @off 表示しない
+ * @default true
+ * @parent StandingPicture
+ * 
  * @param StandingPictureX
  * @type number
  * @min -9007
  * @max 9007
- * @desc 立ち絵のX座標
+ * @desc 立ち絵のX座標です。
  * @default 404
  * @parent StandingPicture
  *
@@ -1323,7 +1347,7 @@
  * @type number
  * @min -9007
  * @max 9007
- * @desc 立ち絵のY座標
+ * @desc 立ち絵のY座標です。
  * @default 120
  * @parent StandingPicture
  *
@@ -1331,7 +1355,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 立ち絵の幅
+ * @desc 立ち絵の幅です。
  * @default 412
  * @parent StandingPicture
  *
@@ -1339,12 +1363,12 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc 立ち絵の高さ
+ * @desc 立ち絵の高さです。
  * @default 504
  * @parent StandingPicture
  *
  * @param STPictChange
- * @desc 立ち絵の切り替え機能を使用するかどうか
+ * @desc 立ち絵の切り替え機能を使用するかどうかを設定します。
  * @type boolean
  * @on 使用する
  * @off 使用しない
@@ -1352,39 +1376,38 @@
  * @parent StandingPicture
  *
  * @param STPictChangeKey
- * @desc 立ち絵の切り替えに使うキー
- * 空欄で切り替え機能をオフ
+ * @desc 立ち絵の切り替えに使うキーです。
  * @default ok
- * @parent StandingPicture
+ * @parent STPictChange
  *
  * @param STPictChangeSE
- * @desc 立ち絵の切り替え時に再生する効果音
+ * @desc 立ち絵の切り替え時に再生する効果音です。
  * 空欄でオフ
  * @type file
  * @require 1
  * @dir audio/se
  * @default Cursor3
- * @parent StandingPicture
+ * @parent STPictChange
  *
  * @param STPictChangeSEVolume
- * @desc 立ち絵の切り替え時に再生する効果音の音量
+ * @desc 立ち絵の切り替え時に再生する効果音の音量です。
  * @default 90
- * @parent StandingPicture
+ * @parent STPictChange
  *
  * @param STPictChangeSEPitch
- * @desc 立ち絵の切り替え時に再生する効果音のピッチ
+ * @desc 立ち絵の切り替え時に再生する効果音のピッチです。
  * @default 100
- * @parent StandingPicture
+ * @parent STPictChange
  *
  * @param STPictChangeSEPan
- * @desc 立ち絵の切り替え時に再生する効果音の位相
+ * @desc 立ち絵の切り替え時に再生する効果音の位相です。
  * @default 0
- * @parent StandingPicture
+ * @parent STPictChange
  *
  * @param STPictLargeLetters
- * @desc ラージサイズな立ち絵ファイル末尾の識別子
+ * @desc ラージサイズな立ち絵ファイル末尾の識別子です。
  * @default _L
- * @parent StandingPicture
+ * @parent STPictChange
  *
  */
 /*~struct~ElementList:ja
@@ -1392,11 +1415,11 @@
  * @type number
  * @min 1
  * @max 9007
- * @desc 表示させたい属性のID
+ * @desc 表示させたい属性のIDです。
  * @default 1
  *
  * @param ElementIconId
- * @desc 属性のアイコン
+ * @desc 属性のアイコンです。
  * @default 0
  */
 /*~struct~ExParamList:ja
@@ -1423,10 +1446,10 @@
 * @option TP再生率
 * @value 9
 * @default 0
-* @desc 表示させたい追加能力値
+* @desc 表示させたい追加能力値です。
 
 * @param ExParamName
-* @desc 追加能力値の用語
+* @desc 追加能力値の用語です。
 * @default 
 */
 /*~struct~SpParamList:ja
@@ -1453,17 +1476,17 @@
  * @option 獲得経験率
  * @value 9
  * @default 0
- * @desc 表示させたい特殊能力値
+ * @desc 表示させたい特殊能力値です。
  *
  * @param SpParamName
  * @default
- * @desc 特殊能力値の用語
+ * @desc 特殊能力値の用語です。
  */
 /*~struct~StateList:ja
  * @param StateId
  * @type state
  * @default 0
- * @desc 表示させたいステートのID
+ * @desc 表示させたいステートのIDです。
  */
 /*~struct~ParamList:ja
  * @param ParameterId
@@ -1485,7 +1508,7 @@
  * @option 運
  * @value 7
  * @default 0
- * @desc 表示させたい能力値のID
+ * @desc 表示させたい能力値のIDです。
  */
 /*~struct~PageList:
  * @param PageContents
@@ -1509,10 +1532,10 @@
  * @option プロフィール
  * @value Profile
  * @default Exp
- * @desc 表示させたいページ
+ * @desc 表示させたいページです。
  *
  * @param PageName
- * @desc ページ選択ウィンドウに表示する名前
+ * @desc ページ選択ウィンドウに表示する名前です。
  * @default
  */
 (() => {
@@ -1617,6 +1640,7 @@
   const wslbase = parameters["PageSelectWindowList"];
   const wslist = StructConvert(wslbase);
 
+  const stpcshow = String(parameters["STPictShow"] || "true");
   const stpx = Number(parameters["StandingPictureX"] || 408);
   const stpy = Number(parameters["StandingPictureY"] || 72);
   const stpw = Number(parameters["StandingPictureWidth"] || 408);
@@ -1733,7 +1757,7 @@
       this.drawText(expheader, x, y, cwidth);
       this.resetTextColor();
     }
-    var y2 = y + (expheader ? lineHeight : 0);
+    const y2 = y + (expheader ? lineHeight : 0);
     this.changeTextColor(ColorManager.systemColor());
     this.drawText(expTotal, x, y2 + lineHeight * 0, cwidth);
     this.drawText(expNext, x, y2 + lineHeight * 2, cwidth);
@@ -2287,7 +2311,9 @@
 
   //Scene_Status
   Scene_Status.prototype.create = function () {
-    this.PresetStandingPictures();
+    if (stpcshow == "true") {
+      this.PresetStandingPictures();
+    }
     Scene_MenuBase.prototype.create.call(this);
     this.createStatusListWindow();
     this.createStatusWindow();
@@ -2300,11 +2326,9 @@
       this._statusListWindow.x -= Graphics.width * 2;
       this._statusListWindow.y -= Graphics.height * 2;
     }
-    var sprite = new Sprite_STPict();
-    sprite.x = stpx;
-    sprite.y = stpy;
-    this.addChild(sprite);
-    this._statusStandingPict = sprite;
+    if (stpcshow == "true") {
+      this.createStandPicture();
+    }
   };
 
   Scene_Status.prototype.helpAreaHeight = function () {
@@ -2356,6 +2380,14 @@
     return new Rectangle(wx, wy, ww, wh);
   };
 
+  Scene_Status.prototype.createStandPicture = function () {
+    const sprite = new Sprite_STPict();
+    sprite.x = stpx;
+    sprite.y = stpy;
+    this.addChild(sprite);
+    this._statusStandingPict = sprite;
+  };
+
   const _Scene_Status_createBackground = Scene_Status.prototype.createBackground;
   Scene_Status.prototype.createBackground = function () {
     if (!stbg) {
@@ -2385,7 +2417,13 @@
     const actor = this.actor();
     this._statusWindow.setActor(actor);
     this._statusDetailWindow.setActor(actor);
-    this._statusStandingPict.setActor(actor);
+    if (stpcshow == "true") {
+      if (stpc == "true") {
+        const actorstpict = actor.faceName() + "_" + actor.faceIndex();
+        ImageManager.loadPicture(actorstpict + stpl);
+      }
+      this._statusStandingPict.setActor(actor);
+    }
   };
 
   Scene_Status.prototype.onActorChange = function () {
@@ -2398,9 +2436,6 @@
     $gameParty.members().forEach(function (actor) {
       const actorstpict = actor.faceName() + "_" + actor.faceIndex();
       ImageManager.loadPicture(actorstpict);
-      if (stpc == "true") {
-        ImageManager.loadPicture(actorstpict + stpl);
-      }
     }, this);
   };
 
@@ -2420,8 +2455,8 @@
     });
   };
 
-  if (stpc == "true") {
-    var _Scene_Status_update = Scene_Status.prototype.update;
+  if (stpcshow == "true" && stpc == "true") {
+    const _Scene_Status_update = Scene_Status.prototype.update;
     Scene_Status.prototype.update = function () {
       _Scene_Status_update.call(this);
       if (Input.isTriggered(stpckey)) {
