@@ -19,7 +19,7 @@
  *  clicking / tapping the standing picture itself,
  *  you can add the function to switch with another corresponding standing picture alternately.
  *  This function is intended for switching between small and large size images.
- * ･It is compatible with RMMZ plugin "Gauge Shape Customize",
+ * ･It is compatible with RMMZ plugin "GaugeShapeCustomize",
  *  and it is possible to change the shape of the gauge to the next level.
  *
  * How to add / set standing pictures:
@@ -59,6 +59,11 @@
  *  set in the plug-in parameter.
  *
  * Update History:
+ * ver.1.1   Added a custom parameters page function.
+ *           Changed the default setting of opacity parameters for any windows to 255.
+ *           Added a function which setting to insert a blank line
+ *            between each any resists at state & element resits page.
+ *           Fixed a bug in the "GaugeShapeCustomize" support function.
  * ver.1.0.2 In the japanese version, refined the plugin parameter description.
  *           Added the function to switch the display setting of the standing picture.
  *           Pre-loading process of standing pictures has been optimized.
@@ -68,7 +73,7 @@
  *            in the plugin parameter description.
  *           Fixed omission of help.
  *           Code optimized.
- * ver.1.0 Released.
+ * ver.1.0   Released.
  *
  * ---
  *
@@ -129,7 +134,7 @@
  * @min 0
  * @max 255
  * @desc Opacity of status window.
- * @default 192
+ * @default 255
  * @parent StatusWindow
  *
  * @param StatusDetailWindow
@@ -172,7 +177,7 @@
  * @min 0
  * @max 255
  * @desc Opacity of status detail window.
- * @default 192
+ * @default 255
  * @parent StatusDetailWindow
  *
  * @param HITandEVASystemTerm
@@ -379,10 +384,32 @@
  * @desc Margin of ex-parameters.
  * @default 30
  * @parent SpParameters
+ * 
+ * @param CustomParams
+ * @desc Custom parameters page setting.
+ * @default 
+ * @parent StatusDetailWindow
+ * 
+ * @param CustomParamsHeader
+ * @desc Header of the custom parameters page. It is displayed before the header of each parameters.
+ * @default Parameters
+ * @parent CustomParams
  *
+ * @param Resists
+ * @desc Any resists setting.
+ * @parent StatusDetailWindow
+ * 
+ * @param ResistsBlankLine
+ * @desc Which setting to insert a blank line between each any resists at state & element resits page.
+ * @type boolean
+ * @on Insert
+ * @off Don't insert
+ * @default true
+ * @parent Resists
+ * 
  * @param StateResist
  * @desc State resist setting.
- * @parent StatusDetailWindow
+ * @parent Resists
  *
  * @param StateResistHeader
  * @desc Header of state resist.
@@ -421,7 +448,7 @@
  *
  * @param ElementResist
  * @desc Element resist setting.
- * @parent StatusDetailWindow
+ * @parent Resists
  *
  * @param ElementResistHeader
  * @desc Header of element resist.
@@ -553,7 +580,7 @@
  * @min 0
  * @max 255
  * @desc Opacity of page select window.
- * @default 192
+ * @default 255
  * @parent PageSelectWindow
  *
  * @param PageSelectWindowList
@@ -768,6 +795,8 @@
  * @value Equips
  * @option Profile
  * @value Profile
+ * @option Custom Parameters Page
+ * @value CustomParam
  * @default Exp
  * @desc Page you want to display page select window.
  *
@@ -798,7 +827,8 @@
  * 　img/pictureフォルダに、
  * 　アクターに設定している顔グラのファイル名 + _（アンダーバー） + 顔グラの配列位置
  * 　というファイル名にした画像ファイルを入れてください。
- * 　また、ラージサイズの立ち絵も使用する場合、上記のファイル名の末尾にSTPictLargeLettersで設定した
+ * 　また、ラージサイズの立ち絵も使用する場合、
+ * 　上記のファイル名の末尾にSTPictLargeLettersで設定した
  * 　識別子を付けたものも用意して、img/pictureフォルダに入れてください。
  * 　アクターに設定している顔グラの配列については、以下を参考にしてください。
  * 　0 1 2 3
@@ -822,6 +852,11 @@
  * 　　立ち絵のサイズは、プラグインパラメータで設定した数値に合わせるようにしてください。
  *
  * 【更新履歴】
+ *   ver.1.1   カスタム能力値ページ機能を追加。
+ *             各種ウィンドウの透明度パラメータの標準設定を、255に変更。
+ *             状態異常・属性有効度ページにて、それぞれの有効度の間に空行をはさむか
+ *             どうかを設定するパラメータを追加。
+ *             GaugeShapeCustomize対応機能のバグを修正。
  *   var.1.0.2 日本語版における、プラグインパラメータの説明文を改定。
  *             立ち絵の表示設定を切り替える機能を追加。
  *             立ち絵の事前読み込み処理を最適化。
@@ -830,7 +865,7 @@
  * 　　　　　　 日本語版における、プラグインパラメータの説明文の誤字を修正。
  * 　　　　　　 ヘルプの表記漏れを修正。
  * 　　　　　　 コードの最適化。
- * 　ver.1.0 公開
+ * 　ver.1.0   公開
  *
  * ---
  *
@@ -891,7 +926,7 @@
  * @min 0
  * @max 255
  * @desc ステータスウィンドウの透明度です。
- * @default 192
+ * @default 255
  * @parent StatusWindow
  *
  * @param StatusDetailWindow
@@ -934,7 +969,7 @@
  * @min 0
  * @max 255
  * @desc ステータス詳細ウィンドウの透明度です。
- * @default 192
+ * @default 255
  * @parent StatusDetailWindow
  *
  * @param HITandEVASystemTerm
@@ -1141,8 +1176,30 @@
  * @desc 特殊能力値同士の間隔です。
  * @default 30
  * @parent SpParameters
+ * 
+ * @param CustomParams
+ * @desc カスタム能力値ページのパラメーター設定です。
+ * @default 
+ * @parent StatusDetailWindow
+ * 
+ * @param CustomParamsHeader
+ * @desc カスタム能力値ページの見出しです。各能力値の見出しより先に表示されます。
+ * @default 能力値
+ * @parent CustomParams
  *
- * @param StateResist
+ * @param Resists
+ * @desc 各種有効度のパラメーター設定です。
+ * @param StatusDetailWindow
+ * 
+ * @param ResistsBlankLine
+ * @desc 状態異常・属性有効度ページにて、それぞれの有効度の間に空行をはさむかどうか。
+ * @type boolean
+ * @on はさむ
+ * @off はさまない
+ * @default true
+ * @parent Resists
+ * 
+ * @param Resists
  * @desc ステート有効度のパラメーター設定です。
  * @parent StatusDetailWindow
  *
@@ -1183,7 +1240,7 @@
  *
  * @param ElementResist
  * @desc 属性有効度のパラメーター設定です。
- * @parent StatusDetailWindow
+ * @parent Resists
  *
  * @param ElementResistHeader
  * @desc 属性有効度欄の見出しです。
@@ -1315,7 +1372,7 @@
  * @min 0
  * @max 255
  * @desc ページ選択ウィンドウの透明度です。
- * @default 192
+ * @default 255
  * @parent PageSelectWindow
  *
  * @param PageSelectWindowList
@@ -1531,6 +1588,8 @@
  * @value Equips
  * @option プロフィール
  * @value Profile
+ * @option カスタム能力値ページ
+ * @value CustomParam
  * @default Exp
  * @desc 表示させたいページです。
  *
@@ -1564,13 +1623,13 @@
   const wsty = Number(parameters["WStatusY"] || 124);
   const wstw = Number(parameters["WStatusWidth"] || 408);
   const wsth = Number(parameters["WStatusHeight"] || 216);
-  const wstop = Number(parameters["WStatusOpacity"] || 192);
+  const wstop = Number(parameters["WStatusOpacity"] || 255);
 
   const wstdx = Number(parameters["WStatusDetailX"] || 0);
   const wstdy = Number(parameters["WStatusDetailY"] || 72);
   const wstdw = Number(parameters["WStatusDetailWidth"] || 408);
   const wstdh = Number(parameters["WStatusDetailHeight"] || 552);
-  const wstdop = Number(parameters["WStatusDetailOpacity"] || 192);
+  const wstdop = Number(parameters["WStatusDetailOpacity"] || 255);
   const hitevast = String(parameters["HITandEVASystemTerm"] || "true");
 
   const expheader = String(parameters["ExpHeader"] || "");
@@ -1607,9 +1666,13 @@
   const spvw = Number(parameters["SpParamValueWidth"] || 50);
   const spmargin = Number(parameters["SpParamMargin"] || 30);
 
+  const cpheader = String(parameters["CustomParamsHeader"] || "");
+
   const sresistheader = String(parameters["StateResistHeader"] || "");
   const sresistbase = parameters["StateResistList"];
   const sresist = StructConvert(sresistbase);
+
+  const resistsblank = String(parameters["ResistsBlankLine"] || "true");
 
   const strcols = Number(parameters["StateResistCols"] || 3);
   const strvw = Number(parameters["StateResistValueWidth"] || 60);
@@ -1636,7 +1699,7 @@
   const wslh = Number(parameters["PageSelectWindowHeight"] || 72);
   const wslv = String(parameters["PageSelectWindowVisible"] || "true");
   const wslcl = Number(parameters["PageSelectWindowMaxCols"] || 4);
-  const wslop = Number(parameters["PageSelectWindowOpacity"] || 192);
+  const wslop = Number(parameters["PageSelectWindowOpacity"] || 255);
   const wslbase = parameters["PageSelectWindowList"];
   const wslist = StructConvert(wslbase);
 
@@ -1738,6 +1801,8 @@
         return this.drawEquipments(6, 0);
       case "Profile":
         return this.drawProfile(6, 0);
+      case "CustomParam":
+          return this.drawCustomParameters(8, 0);
       default:
         return false;
     }
@@ -1896,6 +1961,28 @@
     }
   };
 
+  Window_StatusDetail.prototype.drawCustomParameters = function (x, y) {
+    const cwidth = this.contentsWidth() - x;
+    const lineHeight = this.lineHeight();
+    if (cpheader) {
+      this.changeTextColor(this.systemColor());
+      this.drawText(cpheader, x, y, cwidth);
+    }
+    this.resetTextColor();
+    /* This is a sample code.
+  it draw parameters on the left, and draw ex-params and sp-params on the right.
+  Sp-params draw under the ex-params.
+  Please customize these codes to your liking!
+  */
+    const y2 = y + (cpheader ? lineHeight : 0);
+    const x2 = x + (paramnw + paramvw + parammargin);
+    const y3 = y2 + (paramheader ? lineHeight : 0);
+    const y4 = y3 + (lineHeight * xplines) + (xparamheader ? lineHeight : 0);
+    this.drawParameters(x, y2);
+    this.drawExParameters(x2, y3);
+    this.drawSpParameters(x2, y4);
+  };
+
   Window_StatusDetail.prototype.drawResists = function (x, y) {
     const lineHeight = this.lineHeight();
     const y2 =
@@ -1903,6 +1990,9 @@
       lineHeight *
         (Math.floor(sresist.length / strcols) + (sparamheader ? 3 : 2));
     this.drawStateResists(x, y);
+    if (resistsblank == "true") {
+      y2 += lineHeight;
+    }
     this.drawElementResists(x, y2);
   };
 
@@ -1995,6 +2085,7 @@
   function Window_STList() {
     this.initialize.apply(this, arguments);
   }
+  console.log(Window_StatusDetail.prototype.drawStatusPage)
 
   Window_STList.prototype = Object.create(Window_Command.prototype);
   Window_STList.prototype.constructor = Window_STList;
@@ -2244,12 +2335,7 @@
 
   //GaugeShapeCustomize compatible
   if (gscison) {
-    Sprite_NextExpGauge.prototype.drawGaugeRect = function (
-      x,
-      y,
-      width,
-      height
-    ) {
+    Sprite_NextExpGauge.prototype.drawGaugeRect = function (x, y, width, height) {
       const rate = this.gaugeRate();
       const fillW = Math.floor(width * rate);
       const color0 = this.gaugeBackColor();
@@ -2263,32 +2349,9 @@
           break;
       }
       if (gaugeOutline == "true") {
-        this.bitmap.fillTrap(
-          x + 2,
-          y + 2,
-          width - 4,
-          height - 4,
-          color0,
-          color0
-        );
-        this.bitmap.fillTrap(
-          x + 2,
-          y + 2,
-          fillW - 4,
-          height - 4,
-          color1,
-          color2,
-          "atop"
-        );
-        this.bitmap.strokeTrap(
-          x + 2,
-          y + 2,
-          width - 4,
-          height - 4,
-          color3,
-          color3,
-          "desover"
-        );
+        this.bitmap.fillTrap(x + 2, y + 2, width - 4, height - 4, color0, color0);
+        this.bitmap.fillTrap(x + 2, y + 2, fillW - 4, height - 4, color1, color2, "atop");
+        this.bitmap.outlineTrap(x + 2, y + 2, width - 4, height - 4, color3, color3, "desover");
         this.bitmap.fillTrap(x, y, width, height, "#00000000", "#00000000");
       } else {
         this.bitmap.fillTrap(x, y, width, height, color0, color0);
