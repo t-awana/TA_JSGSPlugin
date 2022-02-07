@@ -55,6 +55,10 @@
  *  set in the plug-in parameter.
  *
  * Update History:
+ * ver.1.2   Added a custom parameters page function.
+ *           Changed the default setting of opacity parameters for any windows to 255.
+ *           Added a function which setting to insert a blank line
+ *            between each any resists at state & element resits page.
  * ver.1.1.2 In the japanese version, refined the plugin parameter description.
  *           Fixed display width setting miss of equipments.
  *           Added the function to switch the display setting of the standing picture.
@@ -64,11 +68,11 @@
  *           In the japanese version, Corrected a typographical error
  *            in the plugin parameter description.
  *           Code optimized.
- * ver.1.1 Added gradient color settings for gauges up to the next level,
- *         and setting the transparency of windows of status scene,
- *         and function of displaying actor's slot names.
- *         Code optimized.
- * ver.1.0 Released.
+ * ver.1.1   Added gradient color settings for gauges up to the next level,
+ *           and setting the transparency of windows of status scene,
+ *           and function of displaying actor's slot names.
+ *           Code optimized.
+ * ver.1.0   Released.
  *
  * ---
  *
@@ -129,7 +133,7 @@
  * @min 0
  * @max 255
  * @desc Opacity of status window.
- * @default 192
+ * @default 255
  * @parent StatusWindow
  *
  * @param HITandEVASystemTerm
@@ -234,7 +238,7 @@
  * @param ExParametersList
  * @desc List of ex-parameters you want to display.
  * @type struct<ExParamList>[]
- * @default ["{\"ExParamName\":\"Hit Rate\",\"ExParamId\":\"0\"}","{\"ExParamName\":\"Evasion Rate\",\"ExParamId\":\"1\"}","{\"ExParamName\":\"Critical Rate\",\"ExParamId\":\"2\"}","{\"ExParamName\":\"Cri. Evasion\",\"ExParamId\":\"3\"}","{\"ExParamName\":\"Mag. Evasion\",\"ExParamId\":\"4\"}","{\"ExParamName\":\"Mag. Reflection\",\"ExParamId\":\"5\"}","{\"ExParamName\":\"Counter Rate\",\"ExParamId\":\"6\"}","{\"ExParamName\":\"HP Regeneration\",\"ExParamId\":\"7\"}","{\"ExParamName\":\"MP Regeneration\",\"ExParamId\":\"8\"}","{\"ExParamName\":\"TP Regeneration\",\"ExParamId\":\"9\"}"]
+ * @default ["{\"ExParamId\":\"0\",\"ExParamName\":\"Hit Rate\"}","{\"ExParamId\":\"1\",\"ExParamName\":\"Evasion Rate\"}","{\"ExParamId\":\"2\",\"ExParamName\":\"Critical Rate\"}","{\"ExParamId\":\"3\",\"ExParamName\":\"Cri. Evasion\"}","{\"ExParamId\":\"4\",\"ExParamName\":\"Mag. Evasion\"}","{\"ExParamId\":\"5\",\"ExParamName\":\"Mag. Reflection\"}","{\"ExParamId\":\"6\",\"ExParamName\":\"Counter Rate\"}","{\"ExParamId\":\"7\",\"ExParamName\":\"HP Regeneration\"}","{\"ExParamId\":\"8\",\"ExParamName\":\"MP Regeneration\"}","{\"ExParamId\":\"9\",\"ExParamName\":\"TP Regeneration\"}"]
  * @parent ExParameters
  *
  * @param ExParamLines
@@ -289,7 +293,7 @@
  * @param SpParametersList
  * @desc List of sp-parameters you want to display.
  * @type struct<SpParamList>[]
- * @default ["{\"SpParamName\":\"Target Rate\",\"SpParamId\":\"0\"}","{\"SpParamName\":\"Grd. Effect Rate\",\"SpParamId\":\"1\"}","{\"SpParamName\":\"Rec. Effect Rate\",\"SpParamId\":\"2\"}","{\"SpParamName\":\"Pharmacology\",\"SpParamId\":\"3\"}","{\"SpParamName\":\"Mp Cost Rate\",\"SpParamId\":\"4\"}","{\"SpParamName\":\"TP Charge Rate\",\"SpParamId\":\"5\"}","{\"SpParamName\":\"Phy. Damage Rate\",\"SpParamId\":\"6\"}","{\"SpParamName\":\"Mag. Damage Rate\",\"SpParamId\":\"7\"}","{\"SpParamName\":\"Floor Damage Rate\",\"SpParamId\":\"8\"}","{\"SpParamName\":\"EXP. Rate\",\"SpParamId\":\"9\"}"]
+ * @default ["{\"SpParamId\":\"0\",\"SpParamName\":\"Target Rate\"}","{\"SpParamId\":\"1\",\"SpParamName\":\"Grd. Effect Rate\"}","{\"SpParamId\":\"2\",\"SpParamName\":\"Rec. Effect Rate\"}","{\"SpParamId\":\"3\",\"SpParamName\":\"Pharmacology\"}","{\"SpParamId\":\"4\",\"SpParamName\":\"Mp Cost Rate\"}","{\"SpParamId\":\"5\",\"SpParamName\":\"TP Charge Rate\"}","{\"SpParamId\":\"6\",\"SpParamName\":\"Phy. Damage Rate\"}","{\"SpParamId\":\"7\",\"SpParamName\":\"Mag. Damage Rate\"}","{\"SpParamId\":\"8\",\"SpParamName\":\"Floor Damage Rate\"}","{\"SpParamId\":\"9\",\"SpParamName\":\"EXP. Rate\"}"]
  * @parent SpParameters
  *
  * @param SpParamLines
@@ -331,10 +335,32 @@
  * @desc Margin of ex-parameters.
  * @default 30
  * @parent SpParameters
+ * 
+ * @param CustomParams
+ * @desc Custom parameters page setting.
+ * @default 
+ * @parent StatusWindow
+ * 
+ * @param CustomParamsHeader
+ * @desc Header of the custom parameters page. It is displayed before the header of each parameters.
+ * @default Parameters
+ * @parent CustomParams
  *
+ * @param Resists
+ * @desc Any resists setting.
+ * @parent StatusWindow
+ * 
+ * @param ResistsBlankLine
+ * @desc Which setting to insert a blank line between each any resists at state & element resits page.
+ * @type boolean
+ * @on Insert
+ * @off Don't insert
+ * @default true
+ * @parent Resists
+ * 
  * @param StateResist
  * @desc State resist setting.
- * @parent StatusWindow
+ * @parent Resists
  *
  * @param StateResistHeader
  * @desc Header of state resist.
@@ -373,7 +399,7 @@
  *
  * @param ElementResist
  * @desc Element resist setting.
- * @parent StatusWindow
+ * @parent Resists
  *
  * @param ElementResistHeader
  * @desc Header of element resist.
@@ -505,7 +531,7 @@
  * @min 0
  * @max 255
  * @desc Opacity of page select window.
- * @default 192
+ * @default 255
  * @parent PageSelectWindow
  *
  * @param PageSelectWindowList
@@ -720,6 +746,8 @@
  * @value Equips
  * @option Profile
  * @value Profile
+ * @option Custom Parameters Page
+ * @value CustomParam
  * @default Exp
  * @desc Page you want to display page select window.
  *
@@ -746,7 +774,8 @@
  * 　img/pictureフォルダに、
  * 　アクターに設定している顔グラのファイル名 + _（アンダーバー） + 顔グラの配列位置
  * 　というファイル名にした画像ファイルを入れてください。
- * 　また、ラージサイズの立ち絵も使用する場合、上記のファイル名の末尾にSTPictLargeLettersで設定した
+ * 　また、ラージサイズの立ち絵も使用する場合、
+ * 　上記のファイル名の末尾にSTPictLargeLettersで設定した
  * 　識別子を付けたものも用意して、img/pictureフォルダに入れてください。
  * 　アクターに設定している顔グラの配列については、以下を参考にしてください。
  * 　0 1 2 3
@@ -771,6 +800,10 @@
  * 　　立ち絵のサイズは、プラグインパラメータで設定した数値に合わせるようにしてください。
  *
  * 【更新履歴】
+ *   ver.1.2   カスタム能力値ページ機能を追加。
+ *             各種ウィンドウの透明度パラメータの標準設定を、255に変更。
+ *             状態異常・属性有効度ページにて、それぞれの有効度の間に空行をはさむか
+ *             どうかを設定するパラメータを追加。
  *   ver.1.1.2 日本語版における、プラグインパラメータの説明文を改定。
  *             装備欄の表示幅の設定ミスを修正。
  *             立ち絵の表示設定を切り替える機能を追加。
@@ -779,11 +812,11 @@
  * 　ver.1.1.1 各種能力値の表示順番がくずれていた不具合を修正。
  *             日本語版における、プラグインパラメータの説明文の誤字を修正。
  *             コードの最適化。
- * 　ver.1.1 次のレベルまでのゲージのグラデーションカラーの設定と、
- *           各種ウィンドウの透明度の設定、
- *           およびアクターのスロット名を表示する機能を追加
- *           コードを最適化。
- * 　ver.1.0 公開
+ * 　ver.1.1   次のレベルまでのゲージのグラデーションカラーの設定と、
+ *             各種ウィンドウの透明度の設定、
+ *             およびアクターのスロット名を表示する機能を追加
+ *             コードを最適化。
+ * 　ver.1.0   公開
  *
  * ---
  *
@@ -844,7 +877,7 @@
  * @min 0
  * @max 255
  * @desc ステータスウィンドウの透明度です。
- * @default 192
+ * @default 255
  * @parent StatusWindow
  *
  * @param HITandEVASystemTerm
@@ -949,7 +982,7 @@
  * @param ExParametersList
  * @desc 表示したい追加能力値のリストです。
  * @type struct<ExParamList>[]
- * @default ["{\"ExParamName\":\"命中率\",\"ExParamId\":\"0\"}","{\"ExParamName\":\"回避率\",\"ExParamId\":\"1\"}","{\"ExParamName\":\"会心率\",\"ExParamId\":\"2\"}","{\"ExParamName\":\"会心回避率\",\"ExParamId\":\"3\"}","{\"ExParamName\":\"魔法回避率\",\"ExParamId\":\"4\"}","{\"ExParamName\":\"魔法反射率\",\"ExParamId\":\"5\"}","{\"ExParamName\":\"反撃率\",\"ExParamId\":\"6\"}","{\"ExParamName\":\"HP再生率\",\"ExParamId\":\"7\"}","{\"ExParamName\":\"MP再生率\",\"ExParamId\":\"8\"}","{\"ExParamName\":\"TP再生率\",\"ExParamId\":\"9\"}"]
+ * @default ["{\"ExParamId\":\"0\",\"ExParamName\":\"命中率\"}","{\"ExParamId\":\"1\",\"ExParamName\":\"回避率\"}","{\"ExParamId\":\"2\",\"ExParamName\":\"会心率\"}","{\"ExParamId\":\"3\",\"ExParamName\":\"会心回避率\"}","{\"ExParamId\":\"4\",\"ExParamName\":\"魔法回避率\"}","{\"ExParamId\":\"5\",\"ExParamName\":\"魔法反射率\"}","{\"ExParamId\":\"6\",\"ExParamName\":\"反撃率\"}","{\"ExParamId\":\"7\",\"ExParamName\":\"HP再生率\"}","{\"ExParamId\":\"8\",\"ExParamName\":\"MP再生率\"}","{\"ExParamId\":\"9\",\"ExParamName\":\"TP再生率\"}"]
  * @parent ExParameters
  *
  * @param ExParamLines
@@ -1004,7 +1037,7 @@
  * @param SpParametersList
  * @desc 表示したい特殊能力値のリストです。
  * @type struct<SpParamList>[]
- * @default ["{\"SpParamName\":\"狙われやすさ\",\"SpParamId\":\"0\"}","{\"SpParamName\":\"防御効果\",\"SpParamId\":\"1\"}","{\"SpParamName\":\"回復効果\",\"SpParamId\":\"2\"}","{\"SpParamName\":\"薬の知識\",\"SpParamId\":\"3\"}","{\"SpParamName\":\"MP消費\",\"SpParamId\":\"4\"}","{\"SpParamName\":\"TPチャージ率\",\"SpParamId\":\"5\"}","{\"SpParamName\":\"物理ダメージ率\",\"SpParamId\":\"6\"}","{\"SpParamName\":\"魔法ダメージ率\",\"SpParamId\":\"7\"}","{\"SpParamName\":\"床ダメージ率\",\"SpParamId\":\"8\"}","{\"SpParamName\":\"獲得経験率\",\"SpParamId\":\"9\"}"]
+ * @default ["{\"SpParamId\":\"0\",\"SpParamName\":\"狙われやすさ\"}","{\"SpParamId\":\"1\",\"SpParamName\":\"防御効果\"}","{\"SpParamId\":\"2\",\"SpParamName\":\"回復効果\"}","{\"SpParamId\":\"3\",\"SpParamName\":\"薬の知識\"}","{\"SpParamId\":\"4\",\"SpParamName\":\"MP消費\"}","{\"SpParamId\":\"5\",\"SpParamName\":\"TPチャージ率\"}","{\"SpParamId\":\"6\",\"SpParamName\":\"物理ダメージ率\"}","{\"SpParamId\":\"7\",\"SpParamName\":\"魔法ダメージ率\"}","{\"SpParamId\":\"8\",\"SpParamName\":\"床ダメージ率\"}","{\"SpParamId\":\"9\",\"SpParamName\":\"獲得経験率\"}"]
  * @parent SpParameters
  *
  * @param SpParamLines
@@ -1046,10 +1079,32 @@
  * @desc 特殊能力値同士の間隔です。
  * @default 30
  * @parent SpParameters
+ * 
+ * @param CustomParams
+ * @desc カスタム能力値ページのパラメーター設定です。
+ * @default 
+ * @parent StatusDetailWindow
+ * 
+ * @param CustomParamsHeader
+ * @desc カスタム能力値ページの見出しです。各能力値の見出しより先に表示されます。
+ * @default 能力値
+ * @parent CustomParams
  *
+ * @param Resists
+ * @desc 各種有効度のパラメーター設定です。
+ * @parent StatusWindow
+ * 
+ * @param ResistsBlankLine
+ * @desc 状態異常・属性有効度ページにて、それぞれの有効度の間に空行をはさむかどうか。
+ * @type boolean
+ * @on はさむ
+ * @off はさまない
+ * @default true
+ * @parent Resists
+ * 
  * @param StateResist
  * @desc ステート有効度のパラメーター設定です。
- * @parent StatusWindow
+ * @parent Resists
  *
  * @param StateResistHeader
  * @desc ステート有効度欄の見出しです。
@@ -1088,7 +1143,7 @@
  *
  * @param ElementResist
  * @desc 属性有効度のパラメーター設定です。
- * @parent StatusWindow
+ * @parent Resists
  *
  * @param ElementResistHeader
  * @desc 属性有効度欄の見出しです。
@@ -1220,7 +1275,7 @@
  * @min 0
  * @max 255
  * @desc ページ選択ウィンドウの透明度です。
- * @default 192
+ * @default 255
  * @parent PageSelectWindow
  *
  * @param PageSelectWindowList
@@ -1436,6 +1491,8 @@
  * @value Equips
  * @option プロフィール
  * @value Profile
+ * @option カスタム能力値ページ
+ * @value CustomParam
  * @default Exp
  * @desc 表示させたいページです。
  *
@@ -1469,7 +1526,7 @@
   var wsty = Number(parameters["WStatusY"] || 72);
   var wstw = Number(parameters["WStatusWidth"] || 408);
   var wsth = Number(parameters["WStatusHeight"] || 552);
-  var wstop = Number(parameters["WStatusOpacity"] || 192);
+  var wstop = Number(parameters["WStatusOpacity"] || 255);
   var hitevast = String(parameters["HITandEVASystemTerm"] || "true");
 
   var expheader = String(parameters["ExpHeader"] || "");
@@ -1506,6 +1563,10 @@
   var spvw = Number(parameters["SpParamValueWidth"] || 50);
   var spmargin = Number(parameters["SpParamMargin"] || 30);
 
+  var cpheader = String(parameters["CustomParamsHeader"] || "");
+
+  var resistsblank = String(parameters["ResistsBlankLine"] || "true");
+
   var sresistheader = String(parameters["StateResistHeader"] || "");
   var sresistbase = parameters["StateResistList"];
   var sresist = StructConvert(sresistbase);
@@ -1535,7 +1596,7 @@
   var wslh = Number(parameters["PageSelectWindowHeight"] || 72);
   var wslv = String(parameters["PageSelectWindowVisible"] || "true");
   var wslcl = Number(parameters["PageSelectWindowMaxCols"] || 4);
-  var wslop = Number(parameters["PageSelectWindowOpacity"] || 192);
+  var wslop = Number(parameters["PageSelectWindowOpacity"] || 255);
   var wslbase = parameters["PageSelectWindowList"];
   var wslist = StructConvert(wslbase);
 
@@ -1609,6 +1670,8 @@
         return this.drawEquipments(8, y);
       case "Profile":
         return this.drawProfile(8, y);
+      case "CustomParam":
+          return this.drawCustomParameters(8, y);
       default:
         return false;
     }
@@ -1670,7 +1733,6 @@
       this.changeTextColor(this.systemColor());
       this.drawText(xparamheader, x, y, cwidth);
     }
-
     for (var i = 0; i < xparams.length; i++) {
       var xparamId = xparams[i].ExParamId;
       var linenum = i % xplines;
@@ -1722,6 +1784,28 @@
     }
   };
 
+  Window_Status.prototype.drawCustomParameters = function (x, y) {
+    var cwidth = this.contentsWidth() - x;
+    var lineHeight = this.lineHeight();
+    if (cpheader) {
+      this.changeTextColor(this.systemColor());
+      this.drawText(cpheader, x, y, cwidth);
+    }
+    this.resetTextColor();
+    /* This is a sample code.
+  it draw parameters on the left, and draw ex-params and sp-params on the right.
+  Sp-params draw under the ex-params.
+  Please customize these codes to your liking!
+  */
+    var y2 = y + (cpheader ? lineHeight : 0);
+    var x2 = x + (paramnw + paramvw + parammargin);
+    var y3 = y2 + (paramheader ? lineHeight : 0);
+    var y4 = y3 + (lineHeight * xplines) + (xparamheader ? lineHeight : 0);
+    this.drawParameters(x, y2);
+    this.drawExParameters(x2, y3);
+    this.drawSpParameters(x2, y4);
+  };
+
   Window_Status.prototype.drawResists = function (x, y) {
     var lineHeight = this.lineHeight();
     var y2 =
@@ -1729,6 +1813,9 @@
       lineHeight *
         (Math.floor(sresist.length / strcols) + (sparamheader ? 3 : 2));
     this.drawStateResists(x, y);
+    if (resistsblank == "true") {
+      y2 += lineHeight;
+    }
     this.drawElementResists(x, y2);
   };
 
@@ -1741,7 +1828,6 @@
       this.drawText(sresistheader, x, y, cwidth);
       this.resetTextColor();
     }
-
     for (var i = 0; i < sresist.length; i++) {
       var x2 = x + (iconBoxWidth + strvw + strmargin) * (i % strcols);
       var y2 =
@@ -1764,7 +1850,6 @@
       this.drawText(eresistheader, x, y, cwidth);
       this.resetTextColor();
     }
-
     for (var i = 0; i < eresist.length; i++) {
       var x2 = x + (iconBoxWidth + elrvw + elrmargin) * (i % elrcols);
       var y2 =
@@ -1806,10 +1891,10 @@
     return maxeq;
   };
 
-  Window_Status.prototype.slotName = function(index) {
+  Window_Status.prototype.slotName = function (index) {
     var slots = this._actor.equipSlots();
-    return this._actor ? $dataSystem.equipTypes[slots[index]] : '';
-};
+    return this._actor ? $dataSystem.equipTypes[slots[index]] : "";
+  };
 
   Window_Status.prototype.drawExpInfo = function (x, y) {
     var cwidth = this.contentsWidth() - x;
@@ -2056,7 +2141,7 @@
     this._statusWindow.opacity = wstop;
     this._listWindow.opacity = wslop;
   };
-
+  
   var _Scene_Status_createBackground = Scene_Status.prototype.createBackground;
   Scene_Status.prototype.createBackground = function () {
     if (!stbg) {
