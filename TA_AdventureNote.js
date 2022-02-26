@@ -50,7 +50,7 @@
  *  please use various event commands and other plugins.
  *
  * Update History:
- * ver.1.1.1 Fixed an omission in the help of the plug-in command "Adv Note Open".
+ * ver.1.1.1 Fixed an omission in the help of the plug-in command "AdvNote Open".
  *           Fixed typos in code and help.
  * ver.1.1 Added plugin command of "AdvNote Open".
  *         Added a setting to display other windows
