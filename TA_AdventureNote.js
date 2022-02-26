@@ -47,6 +47,9 @@
  *  please use various event commands and other plugins.
  *
  * Update History:
+ * ver.1.1 Added plugin command of "Open Adventure Memo".
+ *         Added a setting to display other windows
+ *         when displaying the details of sub events.
  * ver.1.0   Released.
  * 
  * ---
@@ -357,6 +360,14 @@
  * @default 32
  * @parent SubEventNoteWindow
  * 
+ * @param BackWindows_SENW
+ * @desc Whether to display other windows when displaying the notes of the sub event.
+ * @type boolean
+ * @on Show
+ * @off Don't show
+ * @default false
+ * @parent SubEventNoteWindow
+ * 
  * @param Foreground_SENW
  * @desc Whether to display the foreground when displaying the notes of the sub event.
  * @type boolean
@@ -371,7 +382,7 @@
  * @require 1
  * @dir img/system
  * @default
- * @parent SubEventNoteWindow
+ * @parent Foreground_SENW
  * 
  * @param SubEventClearSymbol
  * @desc Whether the symbol is displayed in the sub event note window when the sub event is cleared.
@@ -518,6 +529,9 @@
  * 　各種イベントコマンドや、他のプラグインを利用してください。
  *
  * 【更新履歴】
+ * 　ver.1.1 プラグインコマンドに「冒険メモを開く」を追加。
+ *           サブイベントの詳細表示時に、その他のウィンドウを
+ *           表示するかどうかの設定を追加。
  * 　ver.1.0   公開
  * 
  * ---
@@ -828,6 +842,14 @@
  * @default 32
  * @parent SubEventNoteWindow
  * 
+ * @param BackWindows_SENW
+ * @desc サブイベントの詳細表示時に、その他のウィンドウを表示するかどうかを設定します。
+ * @type boolean
+ * @on 表示する
+ * @off 表示しない
+ * @default false
+ * @parent SubEventNoteWindow
+ * 
  * @param Foreground_SENW
  * @desc サブイベントの詳細表示時に、前景を表示するかどうか設定します。
  * @type boolean
@@ -842,7 +864,7 @@
  * @require 1
  * @dir img/system
  * @default
- * @parent SubEventNoteWindow
+ * @parent Foreground_SENW
  * 
  * @param SubEventClearSymbol
  * @desc サブイベントのクリア時に、詳細ウィンドウにシンボルを表示するかどうか設定します。
@@ -1014,6 +1036,7 @@
   var sevnwh = Number(parameters["SubEventNoteWindowHeight"] || 552);
   var sevnwop = Number(parameters["SubEventNoteWindowOpacity"] || 255);
   var sevtsize = Number(parameters["SubEventTitleFontSize"] || 32);
+  var bwsenw = (parameters["BackWindows_SENW"] || "false");
   var fgsenw = (parameters["Foreground_SENW"] || "false");
   var sevnfg = (parameters["SubEventNoteForeground"]);
 
@@ -1043,7 +1066,14 @@
           break;
         }
       }
-    };
+    if (command === 'AdvNoteOpen') {
+      switch (args[0]) {
+        case 'Open':
+        SceneManager.push(Scene_AdventureNote);
+        break;
+      }
+    }
+  };
 
   //Game_System
   Game_System.prototype.MainEventData = function () {
@@ -1397,9 +1427,11 @@
   };
 
   Scene_AdventureNote.prototype.showSSNote = function () {
-    this._maineventWindow.visible = false;
-    this._ssheaderWindow.visible = false;
-    this._subeventlistWindow.visible = false;
+    if (bwsenw == "false") {
+      this._maineventWindow.visible = false;
+      this._ssheaderWindow.visible = false;
+      this._subeventlistWindow.visible = false;
+    }
     if (advnfg && fgsenw == "false") {
       this._foregroundSprite.visible = false;
     }
@@ -1418,9 +1450,11 @@
     this._ssnbgSprite.visible = false;
     this._subeventnoteWindow.close();
     this._subeventnoteWindow.visible = false;
-    this._maineventWindow.visible = true;
-    this._ssheaderWindow.visible = true;
-    this._subeventlistWindow.visible = true;
+    if (bwsenw == "false") {
+      this._maineventWindow.visible = true;
+      this._ssheaderWindow.visible = true;
+      this._subeventlistWindow.visible = true;
+    }
     this._subeventlistWindow.activate();
   };
 
