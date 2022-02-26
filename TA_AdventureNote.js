@@ -40,6 +40,9 @@
  *  Resets the progress of all sub events,
  *  and sets the all sub events unstarted.
  * 
+ *  AdvNote Open
+ *  Open the adventure note scene.
+ * 
  * Notions:
  *  There is no function to display a dedicated notification
  *  at the start / end of a sub event.
@@ -47,7 +50,9 @@
  *  please use various event commands and other plugins.
  *
  * Update History:
- * ver.1.1 Added plugin command of "Open Adventure Memo".
+ * ver.1.1.1 Fixed an omission in the help of the plug-in command "Adv Note Open".
+ *           Fixed typos in code and help.
+ * ver.1.1 Added plugin command of "AdvNote Open".
  *         Added a setting to display other windows
  *         when displaying the details of sub events.
  * ver.1.0   Released.
@@ -523,13 +528,18 @@
  * 　AdvNote_SubEvent AllReset
  * 　全てのサブイベントの進行状況をリセットし、開始されていない状態に設定します。
  * 
+ * 　AdvNote Open
+ * 　冒険メモを開きます。
+ * 
  * 【注意】
  * 　サブイベントの開始時・終了時に、専用の通知を表示する機能はありません。
  * 　イベントの進行をプレイヤーに知らせたい場合は、
  * 　各種イベントコマンドや、他のプラグインを利用してください。
  *
  * 【更新履歴】
- * 　ver.1.1 プラグインコマンドに「冒険メモを開く」を追加。
+ * 　ver.1.1.1 プラグインコマンド「AdvNote Open」のヘルプの記載漏れを修正。
+ *             コードやヘルプの誤字を修正。
+ * 　ver.1.1 プラグインコマンドに「AdvNote Open」を追加。
  *           サブイベントの詳細表示時に、その他のウィンドウを
  *           表示するかどうかの設定を追加。
  * 　ver.1.0   公開
@@ -1066,7 +1076,7 @@
           break;
         }
       }
-    if (command === 'AdvNoteOpen') {
+    if (command === 'AdvNote') {
       switch (args[0]) {
         case 'Open':
         SceneManager.push(Scene_AdventureNote);
