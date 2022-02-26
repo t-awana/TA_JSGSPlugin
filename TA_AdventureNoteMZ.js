@@ -42,6 +42,9 @@
  *  Resets the progress of all sub events,
  *  and sets the all sub events unstarted.
  * 
+ *  OpenAdventureNote
+ *  Open the adventure note scene.
+ * 
  * Notions:
  *  There is no function to display a dedicated notification
  *  at the start / end of a sub-event.
@@ -49,6 +52,10 @@
  *  please use various event commands and other plugins.
  *
  * Update History:
+ * ver.1.1 Added plugin command of "Open Adventure Memo".
+ *         Added a setting to display other windows
+ *         when displaying the details of sub events.
+ *         Code Optimized.
  * ver.1.0   Released.
  * 
  * ---
@@ -357,6 +364,14 @@
  * @default 30
  * @parent SubEventNoteWindow
  * 
+ * @param BackWindows_SENW
+ * @desc Whether to display other windows when displaying the notes of the sub event.
+ * @type boolean
+ * @on Show
+ * @off Don't show
+ * @default false
+ * @parent SubEventNoteWindow
+ * 
  * @param Foreground_SENW
  * @desc Whether to display the foreground when displaying the notes of the sub event.
  * @type boolean
@@ -370,7 +385,7 @@
  * @type file
  * @dir img/system
  * @default
- * @parent SubEventNoteWindow
+ * @parent Foreground_SENW
  * 
  * @param SubEventClearSymbol
  * @desc Whether the symbol is displayed in the sub event note window when the sub event is cleared.
@@ -435,6 +450,10 @@
  * @command AllSubEventsReset
  * @text ResetAllSubEvents
  * @desc Resets the progress of all sub-events, and sets the all sub-events unstarted.
+ * 
+ * @command AdvNoteOpen
+ * @text OpenAdventureNote
+ * @desc Open the adventure note.
  */
 /*~struct~MainEventList:
  * @param MainEventValue
@@ -535,12 +554,19 @@
  * 　全サブイベントリセット
  * 　全てのサブイベントの進行状況をリセットし、開始されていない状態に設定します。
  * 
+ * 　冒険メモを開く
+ * 　冒険メモを開きます。
+ * 
  * 【注意】
  * 　サブイベントの開始時・終了時に、専用の通知を表示する機能はありません。
  * 　イベントの進行をプレイヤーに知らせたい場合は、
  * 　各種イベントコマンドや、他のプラグインを利用してください。
  *
  * 【更新履歴】
+ * 　ver.1.1 プラグインコマンドに「冒険メモを開く」を追加。
+ *           サブイベントの詳細表示時に、その他のウィンドウを
+ *           表示するかどうかの設定を追加。
+ *           コードの最適化。
  * 　ver.1.0 公開
  * 
  * ---
@@ -849,6 +875,14 @@
  * @default 30
  * @parent SubEventNoteWindow
  * 
+ * @param BackWindows_SENW
+ * @desc サブイベントの詳細表示時に、その他のウィンドウを表示するかどうかを設定します。
+ * @type boolean
+ * @on 表示する
+ * @off 表示しない
+ * @default false
+ * @parent SubEventNoteWindow
+ * 
  * @param Foreground_SENW
  * @desc サブイベントの詳細表示時に、前景を表示するかどうか設定します。
  * @type boolean
@@ -862,7 +896,7 @@
  * @type file
  * @dir img/system
  * @default
- * @parent SubEventNoteWindow
+ * @parent Foreground_SENW
  * 
  * @param SubEventClearSymbol
  * @desc サブイベントのクリア時に、詳細ウィンドウにシンボルを表示するかどうか設定します。
@@ -927,6 +961,10 @@
  * @command AllSubEventsReset
  * @text 全サブイベントリセット
  * @desc 全てのサブイベントの進行状況をリセットし、開始されていない状態に設定します。
+ * 
+ * @command AdvNoteOpen
+ * @text 冒険メモを開く
+ * @desc 冒険メモを開きます。
  */
 /*~struct~MainEventList:ja
  * @param MainEventValue
@@ -1055,6 +1093,7 @@
   const sevnwh = Number(parameters["SubEventNoteWindowHeight"] || 544);
   const sevnwop = Number(parameters["SubEventNoteWindowOpacity"] || 255);
   const sevtsize = Number(parameters["SubEventTitleFontSize"] || 30);
+  const bwsenw = (parameters["BackWindows_SENW"] || "false");
   const fgsenw = (parameters["Foreground_SENW"] || "false");
   const sevnfg = (parameters["SubEventNoteForeground"]);
 
@@ -1082,26 +1121,9 @@
     $gameSystem.SetSubEventClear(seid);
   });
 
-  var _Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
-  Game_Interpreter.prototype.pluginCommand = function(command, args) {
-    _Game_Interpreter_pluginCommand.call(this, command, args);
-    if (command === 'AdvNote_SubEvent') {
-      switch (args[0]) {
-        case 'SetStart':
-          $gameSystem.SetSubEventStart(Number(args[1]));
-          break;
-        case 'SetClear':
-          $gameSystem.SetSubEventClear(Number(args[1]));
-          break;
-        case 'AllReset':
-          var ssnumber = $gameSystem.SubEventNumber();
-          for (var i = 0; i < ssnumber; i++) {
-            $gameVariables.setValue($gameSystem.SubEventVariable(i), 0);
-          }
-          break;
-        }
-      }
-    };
+  PluginManager.registerCommand(pluginName, "AdvNoteOpen", args => {
+    SceneManager.push(Scene_AdventureNote);
+  });
 
   //Game_System
   Game_System.prototype.MainEventData = function () {
@@ -1474,9 +1496,11 @@
   };
 
   Scene_AdventureNote.prototype.showSSNote = function () {
-    this._maineventWindow.visible = false;
-    this._ssheaderWindow.visible = false;
-    this._subeventlistWindow.visible = false;
+    if (bwsenw == "false") {
+      this._maineventWindow.visible = false;
+      this._ssheaderWindow.visible = false;
+      this._subeventlistWindow.visible = false;
+    }
     if (advnfg && fgsenw == "false") {
       this._foregroundSprite.visible = false;
     }
@@ -1495,9 +1519,11 @@
     this._ssnbgSprite.visible = false;
     this._subeventnoteWindow.close();
     this._subeventnoteWindow.visible = false;
-    this._maineventWindow.visible = true;
-    this._ssheaderWindow.visible = true;
-    this._subeventlistWindow.visible = true;
+    if (bwsenw == "false") {
+      this._maineventWindow.visible = true;
+      this._ssheaderWindow.visible = true;
+      this._subeventlistWindow.visible = true;
+    }
     this._subeventlistWindow.activate();
   };
 
