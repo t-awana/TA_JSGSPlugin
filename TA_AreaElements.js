@@ -53,6 +53,13 @@
  *  it activates the area elements offset effect
  *  by the area elements of the versus elements.
  * 
+ * ･<AE_DontAdjust>
+ *  When this note tag is in the note,
+ *  the operation to add or delete area elements specified
+ *  in the equipment, state, actor, and class will not be performed.
+ *  By setting this tag, you can create states and skills
+ *  that do not cause additional area element fluctuations.
+ * 
  *
  * You can enter the these note tag in the note of skill / item.
  * ･<AE_Cost:[element id]>
@@ -77,13 +84,6 @@
  *
  * ･<AE_Need_Nil>
  *  The condition for using skills and items is that there are no area elements.
- *
- * ･<AE_DontAdjust>
- *  When this note tag is in the note,
- *  the operation to add or delete area elements specified
- *  in the equipment, state, actor, and class will not be performed.
- *  By setting this tag, you can create states and skills
- *  that do not cause additional area element fluctuations.
  * 
  *
  * Plugin Commands:
@@ -126,6 +126,7 @@
  * 
  * 
  * Update History:
+ * ver.1.0.1 Fixed a typo in the English help.
  * ver.1.0   Released.
  * 
  * ---
@@ -458,6 +459,7 @@
  * 
  * 
  * 【更新履歴】
+ * 　ver.1.0.1 英語版ヘルプの誤字を修正。
  * 　ver.1.0   公開
  * 
  * ---
