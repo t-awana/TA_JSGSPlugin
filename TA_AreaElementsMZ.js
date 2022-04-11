@@ -128,6 +128,7 @@
  * 
  * 
  * Update History:
+ * ver.1.1 Added a function to adjust the display position of the icon.
  * ver.1.0.1 Fixed a typo in the English help.
  * ver.1.0   Released.
  * 
@@ -250,6 +251,22 @@
  * @dir img/system
  * @default
  * @parent AreaElementSetting
+ * 
+ * @param AEStartX
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc X coordinate of display start position of area element icon.
+ * @default 0
+ * @parent AreaElementSetting
+ *
+ * @param AEStartY
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc Y coordinate of display start position of area element icon.
+ * @default 0
+ * @parent AreaElementSetting
  *
  * @param StableAreaElementSetting
  * @desc Setting of stable area element.
@@ -336,6 +353,30 @@
  * @require 1
  * @dir img/system
  * @default
+ * @parent StableAreaElementSetting
+ * 
+ * @param SAEStartX
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc X coordinate of display start position of stable area element icon.
+ * @default 0
+ * @parent StableAreaElementSetting
+ *
+ * @param SAEStartY
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc Y coordinate of display start position of stable area element icon.
+ * @default 0
+ * @parent StableAreaElementSetting
+ * 
+ * @param SEWPadding
+ * @type number
+ * @min -1
+ * @max 9007
+ * @desc The padding value for stable area element window. Specifying -1 uses the system value.
+ * @default -1
  * @parent StableAreaElementSetting
  * 
  * @command AddStableAreaElement
@@ -520,6 +561,7 @@
  * 
  * 
  * 【更新履歴】
+ * 　ver.1.1   アイコンの表示位置を調整できる機能を追加。
  * 　ver.1.0.1 英語版ヘルプの誤字を修正。
  * 　ver.1.0   公開
  * 
@@ -645,6 +687,22 @@
  * @dir img/system
  * @default
  * @parent AreaElementSetting
+ * 
+ * @param AEStartX
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc 空間属性アイコンの表示開始位置のX座標です。
+ * @default 0
+ * @parent AreaElementSetting
+ *
+ * @param AEStartY
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc 空間属性アイコンの表示開始位置のY座標です。
+ * @default 0
+ * @parent AreaElementSetting
  *
  * @param StableAreaElementSetting
  * @desc 空間属性についてのパラメーター設定です。
@@ -733,6 +791,22 @@
  * @require 1
  * @dir img/system
  * @default
+ * @parent StableAreaElementSetting
+ * 
+ * @param SAEStartX
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc 固定空間属性アイコンの表示開始位置のX座標です。
+ * @default 0
+ * @parent StableAreaElementSetting
+ *
+ * @param SAEStartY
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc 固定空間属性アイコンの表示開始位置のY座標です。
+ * @default 0
  * @parent StableAreaElementSetting
  * 
  * @command AddStableAreaElement
@@ -855,9 +929,13 @@
   const staewbg = String(parameters["SAEWindowBG"]);
 
   const saedp = String(parameters["SAEShowing"] || "standalone");
+  const staestx = Number(parameters["SAEStartX"] || 0);
+  const staesty = Number(parameters["SAEStartY"] || 0);
   const staedistx = Number(parameters["SAEDistanceX"] || 16);
   const staedisty = Number(parameters["SAEDistanceY"] || 0);
 
+  const aestx = Number(parameters["AEStartX"] || 0);
+  const aesty = Number(parameters["AEStartY"] || 0);
   const aedistx = Number(parameters["AEDistanceX"] || 36);
   const aedisty = Number(parameters["AEDistanceY"] || 0);
   const aewssel = String(parameters["AEWShowSelectList"] || "true");
@@ -1387,10 +1465,10 @@
       const bitmap = ImageManager.loadSystem(aewbg);
       this.contents.blt(bitmap, 0, 0, bitmap.width, bitmap.height, 0, 0);
     }
-    let aex = 0;
-    let aey = 0;
-    let staex = 0;
-    let staey = 0;
+    let aex = aestx;
+    let aey = aesty;
+    let staex = staestx;
+    let staey = staesty;
     if (staenum > 0) {
       if (saedp == "beforeae") {
         aex = staedistx + (aedistx * staenum);
@@ -1425,7 +1503,7 @@
       const bitmap = ImageManager.loadSystem(staewbg);
       this.contents.blt(bitmap, 0, 0, bitmap.width, bitmap.height, 0, 0);
     }
-    this.drawSAEIcons(0, 0);
+    this.drawSAEIcons(staestx, staesty);
   };
 
   //Scene_Battle
