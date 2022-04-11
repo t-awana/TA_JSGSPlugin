@@ -126,6 +126,9 @@
  * 
  * 
  * Update History:
+ * ver.1.1 Fixed a bug in the plugin command "AreaElement".
+ *         Added a function to adjust the display position of the icon.
+ *         Changed the default value of window related parameters.
  * ver.1.0.1 Fixed a typo in the English help.
  * ver.1.0   Released.
  * 
@@ -206,7 +209,7 @@
  * @min 0
  * @max 9007
  * @desc Width of area element window.
- * @default 320
+ * @default 316
  * @parent AreaElementSetting
  *
  * @param AEWindowHeight
@@ -214,7 +217,7 @@
  * @min 0
  * @max 9007
  * @desc Height of area element window.
- * @default 72
+ * @default 68
  * @parent AreaElementSetting
  *
  * @param AEWindowX
@@ -222,7 +225,7 @@
  * @min -9007
  * @max 9007
  * @desc X coordinate of area element window.
- * @default 496
+ * @default 500
  * @parent AreaElementSetting
  *
  * @param AEWindowY
@@ -230,7 +233,7 @@
  * @min -9007
  * @max 9007
  * @desc Y coordinate of area element window.
- * @default 372
+ * @default 376
  * @parent AreaElementSetting
  *
  * @param AEWindowOp
@@ -247,6 +250,22 @@
  * @require 1
  * @dir img/system
  * @default
+ * @parent AreaElementSetting
+ * 
+ * @param AEStartX
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc X coordinate of display start position of area element icon.
+ * @default 0
+ * @parent AreaElementSetting
+ *
+ * @param AEStartY
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc Y coordinate of display start position of area element icon.
+ * @default 0
  * @parent AreaElementSetting
  *
  * @param StableAreaElementSetting
@@ -293,7 +312,7 @@
  * @min 0
  * @max 9007
  * @desc Width of stable area element window.
- * @default 108
+ * @default 104
  * @parent StableAreaElementSetting
  *
  * @param SAEWindowHeight
@@ -301,7 +320,7 @@
  * @min 0
  * @max 9007
  * @desc Height of stable area element window.
- * @default 72
+ * @default 68
  * @parent StableAreaElementSetting
  *
  * @param SAEWindowX
@@ -317,7 +336,7 @@
  * @min -9007
  * @max 9007
  * @desc Y coordinate of stable area element window.
- * @default 372
+ * @default 376
  * @parent StableAreaElementSetting
  *
  * @param SAEWindowOp
@@ -334,6 +353,22 @@
  * @require 1
  * @dir img/system
  * @default
+ * @parent StableAreaElementSetting
+ * 
+ * @param SAEStartX
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc X coordinate of display start position of stable area element icon.
+ * @default 0
+ * @parent StableAreaElementSetting
+ *
+ * @param SAEStartY
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc Y coordinate of display start position of stable area element icon.
+ * @default 0
  * @parent StableAreaElementSetting
  */
 /*~struct~AreaElementList:
@@ -459,6 +494,9 @@
  * 
  * 
  * 【更新履歴】
+ * 　ver.1.1   プラグインコマンド「AreaElement」のバグを修正。
+ *             アイコンの表示位置を調整できる機能を追加。
+ *             ウィンドウ関係のパラメーターのデフォルト値を変更。
  * 　ver.1.0.1 英語版ヘルプの誤字を修正。
  * 　ver.1.0   公開
  * 
@@ -549,7 +587,7 @@
  * @min 0
  * @max 9007
  * @desc 空間属性を表示するウィンドウの高さです。
- * @default 72
+ * @default 68
  * @parent AreaElementSetting
  *
  * @param AEWindowX
@@ -557,7 +595,7 @@
  * @min -9007
  * @max 9007
  * @desc 空間属性を表示するウィンドウのX座標です。
- * @default 496
+ * @default 492
  * @parent AreaElementSetting
  *
  * @param AEWindowY
@@ -565,7 +603,7 @@
  * @min -9007
  * @max 9007
  * @desc 空間属性を表示するウィンドウのY座標です。
- * @default 372
+ * @default 376
  * @parent AreaElementSetting
  *
  * @param AEWindowOp
@@ -583,6 +621,22 @@
  * @require 1
  * @dir img/system
  * @default
+ * @parent AreaElementSetting
+ * 
+ * @param AEStartX
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc 空間属性アイコンの表示開始位置のX座標です。
+ * @default 0
+ * @parent AreaElementSetting
+ *
+ * @param AEStartY
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc 空間属性アイコンの表示開始位置のY座標です。
+ * @default 0
  * @parent AreaElementSetting
  *
  * @param StableAreaElementSetting
@@ -638,7 +692,7 @@
  * @min 0
  * @max 9007
  * @desc 固定空間属性を表示するウィンドウの高さです。
- * @default 72
+ * @default 68
  * @parent StableAreaElementSetting
  *
  * @param SAEWindowX
@@ -654,7 +708,7 @@
  * @min -9007
  * @max 9007
  * @desc 固定空間属性を表示するウィンドウのY座標です。
- * @default 372
+ * @default 376
  * @parent StableAreaElementSetting
  *
  * @param SAEWindowOp
@@ -672,6 +726,22 @@
  * @require 1
  * @dir img/system
  * @default
+ * @parent StableAreaElementSetting
+ * 
+ * @param SAEStartX
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc 固定空間属性アイコンの表示開始位置のX座標です。
+ * @default 0
+ * @parent StableAreaElementSetting
+ *
+ * @param SAEStartY
+ * @type number
+ * @min -9007
+ * @max 9007
+ * @desc 固定空間属性アイコンの表示開始位置のY座標です。
+ * @default 0
  * @parent StableAreaElementSetting
  */
 /*~struct~AreaElementList:ja
@@ -722,23 +792,27 @@
   var aerate = Number(parameters["AERate"] || 0.1);
 
   var aewwidth = Number(parameters["AEWindowWidth"] || 320);
-  var aewheight = Number(parameters["AEWindowHeight"] || 72);
-  var aewx = Number(parameters["AEWindowX"] || 496);
-  var aewy = Number(parameters["AEWindowY"] || 372);
+  var aewheight = Number(parameters["AEWindowHeight"] || 68);
+  var aewx = Number(parameters["AEWindowX"] || 500);
+  var aewy = Number(parameters["AEWindowY"] || 376);
   var aeqop = Number(parameters["AEWindowOp"] || 255);
   var aewbg = String(parameters["AEWindowBG"]);
 
-  var staewwidth = Number(parameters["SAEWindowWidth"] || 108);
-  var staewheight = Number(parameters["SAEWindowHeight"] || 72);
+  var staewwidth = Number(parameters["SAEWindowWidth"] || 104);
+  var staewheight = Number(parameters["SAEWindowHeight"] || 68);
   var staewx = Number(parameters["SAEWindowX"] || 0);
-  var staewy = Number(parameters["SAEWindowY"] || 372);
+  var staewy = Number(parameters["SAEWindowY"] || 376);
   var staeqop = Number(parameters["SAEWindowOp"] || 255);
   var staewbg = String(parameters["SAEWindowBG"]);
 
   var saedp = String(parameters["SAEShowing"] || "standalone");
+  var staestx = Number(parameters["SAEStartX"] || 0);
+  var staesty = Number(parameters["SAEStartY"] || 0);
   var staedistx = Number(parameters["SAEDistanceX"] || 16);
   var staedisty = Number(parameters["SAEDistanceY"] || 0);
 
+  var aestx = Number(parameters["AEStartX"] || 0);
+  var aesty = Number(parameters["AEStartY"] || 0);
   var aedistx = Number(parameters["AEDistanceX"] || 36);
   var aedisty = Number(parameters["AEDistanceY"] || 0);
   var aewssel = String(parameters["AEWShowSelectList"] || "false");
@@ -753,7 +827,7 @@
         switch (args[0]) {
           case "add":
             var ae = Number(args[1]);
-            $gameTemp.addAreaElements(args[1]);
+            $gameTemp.addAreaElements(ae);
             break;
           case "vs_add":
             var ae = Number(args[1]);
@@ -774,7 +848,7 @@
             break;
           case "remove":
             var ae = Number(args[1]);
-            $gameTemp.removeAreaElements(args[1]);
+            $gameTemp.removeAreaElements(ae);
             break;
           case "clear":
             $gameTemp.clearAreaElements();
@@ -1265,10 +1339,10 @@
       var bitmap = ImageManager.loadSystem(aewbg);
       this.contents.blt(bitmap, 0, 0, bitmap.width, bitmap.height, 0, 0);
     }
-    var aex = 0;
-    var aey = 0;
-    var staex = 0;
-    var staey = 0;
+    var aex = aestx;
+    var aey = aesty;
+    var staex = staestx;
+    var staey = staesty;
     if (staenum > 0) {
       if (saedp == "beforeae") {
         aex = staedistx + (aedistx * staenum);
@@ -1303,7 +1377,7 @@
       var bitmap = ImageManager.loadSystem(staewbg);
       this.contents.blt(bitmap, 0, 0, bitmap.width, bitmap.height, 0, 0);
     }
-    this.drawSAEIcons(0, 0);
+    this.drawSAEIcons(staestx, staesty);
   };
 
   //Scene_Battle
