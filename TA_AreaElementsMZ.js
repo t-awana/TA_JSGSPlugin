@@ -128,6 +128,12 @@
  * 
  * 
  * Update History:
+ * ver.1.1.1 Fixed a bug that the enablement judgment
+ *           may not be performed normally when the same
+ *           elements is specified multiple times
+ *           in the AE_Cost tag and AE_Need tag.
+ *           Fixed a bug where area elements were not initialized
+ *           at the end of the battle.
  * ver.1.1 Added a function to adjust the display position of the icon.
  * ver.1.0.1 Fixed a typo in the English help.
  * ver.1.0   Released.
@@ -561,6 +567,9 @@
  * 
  * 
  * 【更新履歴】
+ * 　ver.1.1.1 AE_CostタグとAE_Needタグで、同じ属性を複数指定したときに、
+ *             正常に使用可能判定が行われないことがあるバグを修正
+ *             戦闘終了時に空間属性が初期化されないバグを修正。
  * 　ver.1.1   アイコンの表示位置を調整できる機能を追加。
  * 　ver.1.0.1 英語版ヘルプの誤字を修正。
  * 　ver.1.0   公開
@@ -1006,6 +1015,24 @@
     this._staeWindow = staeWindow;
   };
 
+  const _BattleManager_processVictory = BattleManager.processVictory;
+  BattleManager.processVictory = function() {
+    _BattleManager_processVictory.call(this);
+    $gameTemp.clearAreaElements();
+  };
+
+  const _BattleManager_processAbort = BattleManager.processAbort;
+  BattleManager.processAbort = function() {
+    _BattleManager_processAbort.call(this);
+    $gameTemp.clearAreaElements();
+  };
+
+  const _BattleManager_processDefeat = BattleManager.processDefeat;
+  BattleManager.processDefeat = function() {
+    _BattleManager_processDefeat.call(this);
+    $gameTemp.clearAreaElements();
+  };
+
   //Game_Temp
   const _Game_Temp_initialize = Game_Temp.prototype.initialize;
   Game_Temp.prototype.initialize = function () {
@@ -1131,11 +1158,16 @@
       if (allae.length <= 0) {
         return false;
       } else {
-        let allaest = allae.concat().sort(function(a, b) {return a - b;});
-        let aeneedst = aeneed.concat().sort(function(a, b) {return a - b;});
-        let aeset = allaest.filter(i => aeneedst.indexOf(i) != -1).sort();
+        let allaest = allae.concat();
+        let aeneedst = aeneed.concat();
+        let aeset = allaest.filter(i => aeneedst.indexOf(i) != -1);
         for (let i = 0, n = aeneedst.length; i < n; ++i) {
-          if (aeneedst[i] !== aeset[i]) return false;
+          let aesetindex = aeset.indexOf(aeneedst[i]);
+          if (aesetindex !== -1) {
+            aeset.splice(aesetindex, 1);
+          } else {
+            return false
+          }
         }
         return true;
       }
@@ -1144,11 +1176,16 @@
       if (allae.length <= 0) {
         return false;
       } else {
-        let allaest = allae.concat().sort(function(a, b) {return a - b;});
-        let aecostst = aecost.concat().sort(function(a, b) {return a - b;});
-        let aeset = allaest.filter(i => aecostst.indexOf(i) != -1).sort();
+        let allaest = allae.concat();
+        let aecostst = aecost.concat();
+        let aeset = allaest.filter(i => aecostst.indexOf(i) != -1);
         for (let i = 0, n = aecostst.length; i < n; ++i) {
-          if (aecostst[i] !== aeset[i]) return false;
+          let aesetindex = aeset.indexOf(aecostst[i]);
+          if (aesetindex !== -1) {
+            aeset.splice(aesetindex, 1);
+          } else {
+            return false
+          }
         }
         return true;
       }
@@ -1225,11 +1262,16 @@
       if (allae.length <= 0) {
         return false;
       } else {
-        let allaest = allae.concat().sort(function(a, b) {return a - b;});
-        let aeneedst = aeneed.concat().sort(function(a, b) {return a - b;});
-        let aeset = allaest.filter(i => aeneedst.indexOf(i) != -1).sort();
+        let allaest = allae.concat();
+        let aeneedst = aeneed.concat();
+        let aeset = allaest.filter(i => aeneedst.indexOf(i) != -1);
         for (let i = 0, n = aeneedst.length; i < n; ++i) {
-          if (aeneedst[i] !== aeset[i]) return false;
+          let aesetindex = aeset.indexOf(aeneedst[i]);
+          if (aesetindex !== -1) {
+            aeset.splice(aesetindex, 1);
+          } else {
+            return false
+          }
         }
         return true;
       }
@@ -1238,11 +1280,16 @@
       if (allae.length <= 0) {
         return false;
       } else {
-        let allaest = allae.concat().sort(function(a, b) {return a - b;});
-        let aecostst = aecost.concat().sort(function(a, b) {return a - b;});
-        let aeset = allaest.filter(i => aecostst.indexOf(i) != -1).sort();
+        let allaest = allae.concat();
+        let aecostst = aecost.concat();
+        let aeset = allaest.filter(i => aecostst.indexOf(i) != -1);
         for (let i = 0, n = aecostst.length; i < n; ++i) {
-          if (aecostst[i] !== aeset[i]) return false;
+          let aesetindex = aeset.indexOf(aecostst[i]);
+          if (aesetindex !== -1) {
+            aeset.splice(aesetindex, 1);
+          } else {
+            return false
+          }
         }
         return true;
       }
