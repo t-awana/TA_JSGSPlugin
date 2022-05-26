@@ -126,6 +126,13 @@
  * 
  * 
  * Update History:
+ * ver.1.1.1 Fixed a bug that the enablement judgment
+ *           may not be performed normally when the same
+ *           elements is specified multiple times
+ *           in the AE_Cost tag and AE_Need tag.
+ *           Fixed a bug where area elements were not initialized
+ *           at the end of the battle.
+ *           Changed the default value of window related parameters.
  * ver.1.1 Fixed a bug in the plugin command "AreaElement".
  *         Added a function to adjust the display position of the icon.
  *         Changed the default value of window related parameters.
@@ -209,7 +216,7 @@
  * @min 0
  * @max 9007
  * @desc Width of area element window.
- * @default 316
+ * @default 320
  * @parent AreaElementSetting
  *
  * @param AEWindowHeight
@@ -225,7 +232,7 @@
  * @min -9007
  * @max 9007
  * @desc X coordinate of area element window.
- * @default 500
+ * @default 496
  * @parent AreaElementSetting
  *
  * @param AEWindowY
@@ -494,6 +501,10 @@
  * 
  * 
  * 【更新履歴】
+ * 　ver.1.1.1 AE_CostタグとAE_Needタグで、同じ属性を複数指定したときに、
+ *             正常に使用可能判定が行われないことがあるバグを修正。
+ *             戦闘終了時に空間属性が初期化されないバグを修正。
+ *             ウィンドウ関係のパラメーターのデフォルト値を変更。
  * 　ver.1.1   プラグインコマンド「AreaElement」のバグを修正。
  *             アイコンの表示位置を調整できる機能を追加。
  *             ウィンドウ関係のパラメーターのデフォルト値を変更。
@@ -595,7 +606,7 @@
  * @min -9007
  * @max 9007
  * @desc 空間属性を表示するウィンドウのX座標です。
- * @default 492
+ * @default 496
  * @parent AreaElementSetting
  *
  * @param AEWindowY
@@ -793,7 +804,7 @@
 
   var aewwidth = Number(parameters["AEWindowWidth"] || 320);
   var aewheight = Number(parameters["AEWindowHeight"] || 68);
-  var aewx = Number(parameters["AEWindowX"] || 500);
+  var aewx = Number(parameters["AEWindowX"] || 496);
   var aewy = Number(parameters["AEWindowY"] || 376);
   var aeqop = Number(parameters["AEWindowOp"] || 255);
   var aewbg = String(parameters["AEWindowBG"]);
@@ -889,6 +900,24 @@
 
   BattleManager.setStableAEWindow = function (staeWindow) {
     this._staeWindow = staeWindow;
+  };
+
+  var _BattleManager_processVictory = BattleManager.processVictory;
+  BattleManager.processVictory = function() {
+    _BattleManager_processVictory.call(this);
+    $gameTemp.clearAreaElements();
+  };
+
+  var _BattleManager_processAbort = BattleManager.processAbort;
+  BattleManager.processAbort = function() {
+    _BattleManager_processAbort.call(this);
+    $gameTemp.clearAreaElements();
+  };
+
+  var _BattleManager_processDefeat = BattleManager.processDefeat;
+  BattleManager.processDefeat = function() {
+    _BattleManager_processDefeat.call(this);
+    $gameTemp.clearAreaElements();
   };
 
   //Game_Temp
@@ -1005,11 +1034,16 @@
       if (allae.length <= 0) {
         return false;
       } else {
-        var allaest = allae.concat().sort(function(a, b) {return a - b;});
-        var aeneedst = aeneed.concat().sort(function(a, b) {return a - b;});
-        var aeset = allaest.filter(i => aeneedst.indexOf(i) != -1).sort();
+        var allaest = allae.concat();
+        var aeneedst = aeneed.concat();
+        var aeset = allaest.filter(i => aeneedst.indexOf(i) != -1);
         for (var i = 0, n = aeneedst.length; i < n; ++i) {
-          if (aeneedst[i] !== aeset[i]) return false;
+          var aesetindex = aeset.indexOf(aeneedst[i]);
+          if (aesetindex !== -1) {
+            aeset.splice(aesetindex, 1);
+          } else {
+            return false
+          }
         }
         return true;
       }
@@ -1018,11 +1052,16 @@
       if (allae.length <= 0) {
         return false;
       } else {
-        var allaest = allae.concat().sort(function(a, b) {return a - b;});
-        var aecostst = aecost.concat().sort(function(a, b) {return a - b;});
-        var aeset = allaest.filter(i => aecostst.indexOf(i) != -1).sort();
+        var allaest = allae.concat();
+        var aecostst = aecost.concat();
+        var aeset = allaest.filter(i => aecostst.indexOf(i) != -1);
         for (var i = 0, n = aecostst.length; i < n; ++i) {
-          if (aecostst[i] !== aeset[i]) return false;
+          var aesetindex = aeset.indexOf(aecostst[i]);
+          if (aesetindex !== -1) {
+            aeset.splice(aesetindex, 1);
+          } else {
+            return false
+          }
         }
         return true;
       }
@@ -1099,11 +1138,16 @@
       if (allae.length <= 0) {
         return false;
       } else {
-        var allaest = allae.concat().sort(function(a, b) {return a - b;});
-        var aeneedst = aeneed.concat().sort(function(a, b) {return a - b;});
-        var aeset = allaest.filter(i => aeneedst.indexOf(i) != -1).sort();
+        var allaest = allae.concat();
+        var aeneedst = aeneed.concat();
+        var aeset = allaest.filter(i => aeneedst.indexOf(i) != -1);
         for (var i = 0, n = aeneedst.length; i < n; ++i) {
-          if (aeneedst[i] !== aeset[i]) return false;
+          var aesetindex = aeset.indexOf(aeneedst[i]);
+          if (aesetindex !== -1) {
+            aeset.splice(aesetindex, 1);
+          } else {
+            return false
+          }
         }
         return true;
       }
@@ -1112,11 +1156,16 @@
       if (allae.length <= 0) {
         return false;
       } else {
-        var allaest = allae.concat().sort(function(a, b) {return a - b;});
-        var aecostst = aecost.concat().sort(function(a, b) {return a - b;});
-        var aeset = allaest.filter(i => aecostst.indexOf(i) != -1).sort();
+        var allaest = allae.concat();
+        var aecostst = aecost.concat();
+        var aeset = allaest.filter(i => aecostst.indexOf(i) != -1);
         for (var i = 0, n = aecostst.length; i < n; ++i) {
-          if (aecostst[i] !== aeset[i]) return false;
+          var aesetindex = aeset.indexOf(aecostst[i]);
+          if (aesetindex !== -1) {
+            aeset.splice(aesetindex, 1);
+          } else {
+            return false
+          }
         }
         return true;
       }
