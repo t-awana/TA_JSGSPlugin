@@ -1,4 +1,4 @@
-# JGSS Plugins
+# TA_JGSSPlugins
 Plugins for JGSS made by Tamaki Awana.<br>
 These plugins are provided under the MIT License.<br>
 
