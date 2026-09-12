@@ -2,50 +2,50 @@
 // TA_StoryNote.js
 //=============================================================================
 /*:
- * @plugindesc ストーリーノート機能を実装します。
+ * @plugindesc Add the function of story note.
  * @author Tamaki Awana
- * @help ストーリーの展開を振り返ることが出来る、ストーリーノート機能を
- * 実装します。
- * あらかじめ設定しておいた変数の値と連動して、ストーリーの
- * 内容が表示されていきます。
+ * @help Add the story note function that can review the 
+ * progression of the story.
+ * The story content is displayed based on 
+ * the values ​​of pre-set variables.
  * 
- * 【プラグインコマンド】
+ * Plugin Commands:  
  * StoryNote Open
- * ストーリーノートを開きます。
+ * Open the story note scene.
  * 
- * 【更新履歴】
- * 　ver.1.0   公開
+ * Update History:
+ * ver.1.0.1 English Supported
+ * ver.1.0   Released.
  * 
  * ---
  *
- * このプラグインは MIT License にもとづいて提供されています。
+ * This plugin is released under MIT license.
  * https://opensource.org/licenses/mit-license.php
  *
  * @param StoryNoteBackground
- * @desc ストーリーノートシーンの背景です。
- * 「なし」で無効になります。
+ * @desc Background on story note scene. Select "None" to disable it.
  * @type file
  * @require 1
  * @dir img/system
  * @default
  * 
  * @param StoryNoteMenuCommandName
- * @desc メニューに表示するコマンド名です。
- * @default ストーリー
+ * @desc The command name of the story note to be displayed in the menu.
+ * @default Story
  * 
  * @param StoryVariable
- * @desc 進行度の判定に使う変数を設定します。
+ * @desc Set the variable used to determine the progress.
  * @type variable
  * @default 0
  *
  * @param StoryNoteHeaderWindow
- * @desc ストーリーノート見出しウィンドウについての設定です。
+ * @desc Story note header window setting.
  * 
  * @param StoryNoteHeaderWindowX
  * @type number
  * @min -9007
  * @max 9007
- * @desc ストーリーノート見出しウィンドウのX座標です。
+ * @desc X coordinate of story note header window.
  * @default 0
  * @parent StoryNoteHeaderWindow
  *
@@ -53,7 +53,7 @@
  * @type number
  * @min -9007
  * @max 9007
- * @desc ストーリーノート見出しウィンドウのY座標です。
+ * @desc Y coordinate of story note header window.
  * @default 0
  * @parent StoryNoteHeaderWindow
  *
@@ -61,7 +61,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ストーリーノート見出しウィンドウの横幅です。
+ * @desc Width of story note header window.
  * @default 816
  * @parent StoryNoteHeaderWindow
  *
@@ -69,22 +69,22 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ストーリーノート見出しウィンドウの縦幅です。
+ * @desc Height of story note header window.
  * @default 72
  * @parent StoryNoteHeaderWindow
  * 
  * @param StoryHeaderText
- * @desc ストーリーノートの見出しです。
- * @default 次の目的
+ * @desc Header of story note.
+ * @default Next purpose
  *
  * @param StoryNoteListWindow
- * @desc ストーリーノート一覧ウィンドウについての設定です。
+ * @desc Story note list window setting.
  * 
  * @param StoryNoteListWindowX
  * @type number
  * @min -9007
  * @max 9007
- * @desc ストーリーノート一覧ウィンドウのX座標です。
+ * @desc X coordinate of story note list window.
  * @default 0
  * @parent StoryNoteListWindow
  *
@@ -92,7 +92,7 @@
  * @type number
  * @min -9007
  * @max 9007
- * @desc ストーリーノート一覧ウィンドウのY座標です。
+ * @desc Y coordinate of story note list window.
  * @default 72
  * @parent StoryNoteListWindow
  *
@@ -100,7 +100,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ストーリーノート一覧ウィンドウの横幅です。
+ * @desc Width of story note list window.
  * @default 192
  * @parent StoryNoteListWindow
  *
@@ -108,18 +108,18 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ストーリーノート一覧ウィンドウの縦幅です。
+ * @desc Height of story note list window.
  * @default 552
  * @parent StoryNoteListWindow
  * 
  * @param StoryNoteWindow
- * @desc ストーリーノートウィンドウについての設定です。
+ * @desc Story note window setting.
  * 
  * @param StoryNoteWindowX
  * @type number
  * @min -9007
  * @max 9007
- * @desc ストーリーノートウィンドウのX座標です。
+ * @desc X coordinate of story note window.
  * @default 192
  * @parent StoryNoteWindow
  *
@@ -127,7 +127,7 @@
  * @type number
  * @min -9007
  * @max 9007
- * @desc ストーリーノートウィンドウのY座標です。
+ * @desc Y coordinate of story note window.
  * @default 72
  * @parent StoryNoteWindow
  *
@@ -135,7 +135,7 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ストーリーノートウィンドウの横幅です。
+ * @desc Width of story note window.
  * @default 624
  * @parent StoryNoteWindow
  *
@@ -143,30 +143,30 @@
  * @type number
  * @min 0
  * @max 9007
- * @desc ストーリーノートウィンドウの縦幅です。
+ * @desc Height of story note window.
  * @default 552
  * @parent StoryNoteWindow
  * 
  * @param StoryNotes
- * @desc ストーリーノートのエピソード一覧です。
+ * @desc List of story note episodes.
  * @type struct<EpisodeList>[]
  * @default 
  * 
  */
 /*~struct~EpisodeList:
  * @param id
- * @desc エピソードの値です。
+ * @desc Value of episode.
  * @type number
  * @min 0
  * @max 99999999
  * @default 0
  * 
  * @param EpisodeTitle
- * @desc エピソードのタイトルです。
+ * @desc Title of episode.
  * @default
  * 
  * @param EpisodeNote
- * @desc エピソードの詳細です。
+ * @desc Details of episode.
  * @type note
  * @default
  */
@@ -183,6 +183,7 @@
  * ストーリーノートを開きます。
  * 
  * 【更新履歴】
+ * 　ver.1.1.1 英語に対応
  * 　ver.1.0   公開
  * 
  * ---
